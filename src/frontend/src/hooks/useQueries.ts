@@ -5,7 +5,6 @@ import type {
   Hall,
   PlatformStats,
   Review,
-  ShoppingItem,
   UserProfile,
   UserRole,
 } from "../backend.d";
@@ -371,41 +370,4 @@ export function useGetPlatformStats() {
   });
 }
 
-// ─── Stripe ───────────────────────────────────────────────────────────────────
-
-export function useCreateCheckoutSession() {
-  const { actor } = useActor();
-  return useMutation({
-    mutationFn: async ({
-      items,
-      successUrl,
-      cancelUrl,
-    }: {
-      items: ShoppingItem[];
-      successUrl: string;
-      cancelUrl: string;
-    }) => {
-      if (!actor) throw new Error("Not connected");
-      return actor.createCheckoutSession(items, successUrl, cancelUrl);
-    },
-  });
-}
-
-export function useGetStripeSessionStatus(sessionId: string) {
-  const { actor, isFetching } = useActor();
-  return useQuery({
-    queryKey: ["stripe-session", sessionId],
-    queryFn: async () => {
-      if (!actor || !sessionId) return null;
-      return actor.getStripeSessionStatus(sessionId);
-    },
-    enabled: !!actor && !isFetching && !!sessionId,
-    refetchInterval: (query) => {
-      const data = query.state.data;
-      if (!data) return 2000;
-      if (data.__kind__ === "completed" || data.__kind__ === "failed")
-        return false;
-      return 2000;
-    },
-  });
-}
+// ─── Stripe hooks removed — Razorpay is used client-side instead ─────────────

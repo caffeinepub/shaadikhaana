@@ -34,7 +34,6 @@ import { EVENT_TYPES, SAMPLE_HALLS } from "../data/sampleHalls";
 import { useInternetIdentity } from "../hooks/useInternetIdentity";
 import {
   useCreateBooking,
-  useCreateCheckoutSession,
   useGetBookedDates,
   useGetHall,
 } from "../hooks/useQueries";
@@ -44,6 +43,35 @@ import {
   formatPrice,
   toDateString,
 } from "../lib/formatters";
+
+// Extend Window to include Razorpay
+declare global {
+  interface Window {
+    Razorpay: new (options: RazorpayOptions) => RazorpayInstance;
+  }
+}
+
+interface RazorpayOptions {
+  key: string;
+  amount: number;
+  currency: string;
+  name: string;
+  description: string;
+  prefill: Record<string, string>;
+  theme: { color: string };
+  handler: (response: RazorpayResponse) => void;
+  modal?: { ondismiss?: () => void };
+}
+
+interface RazorpayResponse {
+  razorpay_payment_id: string;
+  razorpay_order_id?: string;
+  razorpay_signature?: string;
+}
+
+interface RazorpayInstance {
+  open: () => void;
+}
 
 const STEPS = [
   { label: "Dates", icon: Calendar },
@@ -55,6 +83,21 @@ const STEPS = [
 /** Returns true if [s1, e1] overlaps with [s2, e2] (date strings "YYYY-MM-DD") */
 function datesOverlap(s1: string, e1: string, s2: string, e2: string): boolean {
   return s1 <= e2 && e1 >= s2;
+}
+
+/** Dynamically loads the Razorpay checkout script */
+function loadRazorpayScript(): Promise<boolean> {
+  return new Promise((resolve) => {
+    if (window.Razorpay) {
+      resolve(true);
+      return;
+    }
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.onload = () => resolve(true);
+    script.onerror = () => resolve(false);
+    document.body.appendChild(script);
+  });
 }
 
 export default function BookingPage() {
@@ -76,7 +119,6 @@ export default function BookingPage() {
   const [agreedToTerms, setAgreedToTerms] = useState(false);
 
   const createBooking = useCreateBooking();
-  const createCheckout = useCreateCheckoutSession();
   const [isProcessing, setIsProcessing] = useState(false);
 
   // Booked dates for conflict detection
@@ -92,7 +134,7 @@ export default function BookingPage() {
     [hall, totalDays],
   );
 
-  // 3.5% platform fee (booking charge paid to ShaadiKhaana)
+  // 3.5% platform fee in paise (prices stored in paise)
   const platformFee = useMemo(
     () => (hallPrice * BigInt(35)) / BigInt(1000),
     [hallPrice],
@@ -141,10 +183,32 @@ export default function BookingPage() {
     eventType && guestCount && Number.parseInt(guestCount) > 0;
   const canProceedStep2 = agreedToTerms;
 
-  const handleCheckout = async () => {
+  const handleRazorpayPayment = async () => {
     if (!identity || !hall) return;
     setIsProcessing(true);
+
     try {
+      // Check Razorpay key
+      const razorpayKeyId = localStorage.getItem("razorpay_key_id") || "";
+      if (!razorpayKeyId) {
+        toast.error(
+          "Razorpay Key ID not configured. Please ask the admin to set it up.",
+        );
+        setIsProcessing(false);
+        return;
+      }
+
+      // Load Razorpay SDK
+      const loaded = await loadRazorpayScript();
+      if (!loaded) {
+        toast.error(
+          "Failed to load payment gateway. Check your internet connection.",
+        );
+        setIsProcessing(false);
+        return;
+      }
+
+      // Create the booking record first (pending state)
       const bookingId = crypto.randomUUID();
       const booking = {
         id: bookingId,
@@ -167,29 +231,40 @@ export default function BookingPage() {
 
       await createBooking.mutateAsync(booking);
 
-      const successUrl = `${window.location.origin}/booking-success?booking_id=${bookingId}&session_id={CHECKOUT_SESSION_ID}`;
-      const cancelUrl = `${window.location.origin}/book/${hall.id}`;
+      // Amount in paise (platform stores prices already in paise)
+      const amountInPaise = Number(platformFee);
 
-      // Only charge the 3.5% booking fee online — the rest is paid to the hall owner directly
-      const checkoutUrl = await createCheckout.mutateAsync({
-        items: [
-          {
-            productName: `Booking Charge — ${hall.name}`,
-            productDescription: `3.5% booking fee for ${formatDate(startDate)} to ${formatDate(endDate)} | ${eventType}`,
-            quantity: BigInt(1),
-            priceInCents: platformFee,
-            currency: "inr",
+      // Open Razorpay modal
+      const rzp = new window.Razorpay({
+        key: razorpayKeyId,
+        amount: amountInPaise,
+        currency: "INR",
+        name: "ShaadiKhaana",
+        description: `Booking Charge — ${hall.name}`,
+        prefill: {},
+        theme: { color: "#b45309" },
+        handler: async (response: RazorpayResponse) => {
+          // Payment succeeded — navigate to success page
+          navigate({
+            to: "/booking-success",
+            search: {
+              payment_id: response.razorpay_payment_id,
+              booking_id: bookingId,
+            } as Record<string, string>,
+          });
+        },
+        modal: {
+          ondismiss: () => {
+            toast.error("Payment cancelled. Your booking is still pending.");
+            setIsProcessing(false);
           },
-        ],
-        successUrl,
-        cancelUrl,
+        },
       });
 
-      window.location.href = checkoutUrl;
+      rzp.open();
     } catch (err) {
-      console.error("Checkout error:", err);
+      console.error("Payment error:", err);
       toast.error("Failed to initiate payment. Please try again.");
-    } finally {
       setIsProcessing(false);
     }
   };
@@ -558,6 +633,7 @@ export default function BookingPage() {
                         checked={agreedToTerms}
                         onCheckedChange={(v) => setAgreedToTerms(v === true)}
                         className="mt-0.5"
+                        data-ocid="booking.terms.checkbox"
                       />
                       <label
                         htmlFor="terms"
@@ -605,24 +681,30 @@ export default function BookingPage() {
                     <ChevronRight className="w-4 h-4" />
                   </Button>
                 ) : (
-                  <Button
-                    data-ocid="booking.pay_button"
-                    onClick={handleCheckout}
-                    disabled={!canProceedStep2 || isProcessing}
-                    className="gap-2 bg-primary text-primary-foreground shadow-gold h-11 px-6 font-semibold"
-                  >
-                    {isProcessing ? (
-                      <>
-                        <Loader2 className="w-4 h-4 animate-spin" />
-                        Processing...
-                      </>
-                    ) : (
-                      <>
-                        <CreditCard className="w-4 h-4" />
-                        Pay {formatPrice(platformFee)}
-                      </>
-                    )}
-                  </Button>
+                  <div className="flex flex-col items-end gap-1.5">
+                    <Button
+                      data-ocid="booking.pay_button"
+                      onClick={handleRazorpayPayment}
+                      disabled={!canProceedStep2 || isProcessing}
+                      className="gap-2 bg-primary text-primary-foreground shadow-gold h-11 px-6 font-semibold"
+                    >
+                      {isProcessing ? (
+                        <>
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                          Processing...
+                        </>
+                      ) : (
+                        <>
+                          <CreditCard className="w-4 h-4" />
+                          Pay with Razorpay — {formatPrice(platformFee)}
+                        </>
+                      )}
+                    </Button>
+                    <p className="text-xs text-muted-foreground flex items-center gap-1">
+                      <ShieldCheck className="w-3 h-3 text-green-600" />
+                      Secured by Razorpay
+                    </p>
+                  </div>
                 )}
               </div>
             </div>

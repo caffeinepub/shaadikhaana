@@ -1,5 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -20,6 +22,9 @@ import {
   Building2,
   Calendar,
   CheckCircle2,
+  Eye,
+  EyeOff,
+  KeyRound,
   Loader2,
   Shield,
   TrendingUp,
@@ -53,6 +58,21 @@ export default function AdminDashboard() {
   const markCompleted = useMarkBookingCompleted();
   const [statusFilter, setStatusFilter] = useState("all");
   const [completingId, setCompletingId] = useState<string | null>(null);
+
+  // Razorpay settings state
+  const [razorpayKey, setRazorpayKey] = useState(
+    () => localStorage.getItem("razorpay_key_id") || "",
+  );
+  const [showKey, setShowKey] = useState(false);
+
+  const handleSaveRazorpayKey = () => {
+    if (!razorpayKey.trim()) {
+      toast.error("Please enter a valid Razorpay Key ID.");
+      return;
+    }
+    localStorage.setItem("razorpay_key_id", razorpayKey.trim());
+    toast.success("Razorpay Key ID saved successfully.");
+  };
 
   const handleMarkCompleted = async (bookingId: string) => {
     setCompletingId(bookingId);
@@ -201,10 +221,15 @@ export default function AdminDashboard() {
         {/* Tabs */}
         <Tabs defaultValue="bookings">
           <TabsList className="mb-6 bg-card border border-border">
-            <TabsTrigger value="bookings">
+            <TabsTrigger value="bookings" data-ocid="admin.bookings.tab">
               All Bookings ({bookings.length})
             </TabsTrigger>
-            <TabsTrigger value="halls">All Halls ({halls.length})</TabsTrigger>
+            <TabsTrigger value="halls" data-ocid="admin.halls.tab">
+              All Halls ({halls.length})
+            </TabsTrigger>
+            <TabsTrigger value="settings" data-ocid="admin.settings.tab">
+              Settings
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="bookings">
@@ -367,6 +392,98 @@ export default function AdminDashboard() {
                     )}
                   </TableBody>
                 </Table>
+              </div>
+            </div>
+          </TabsContent>
+          <TabsContent value="settings">
+            <div className="max-w-lg">
+              <div className="bg-card rounded-xl border border-border p-6 space-y-6">
+                {/* Header */}
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center">
+                    <KeyRound className="w-5 h-5 text-primary" />
+                  </div>
+                  <div>
+                    <h2 className="font-semibold text-base text-foreground">
+                      Razorpay Settings
+                    </h2>
+                    <p className="text-xs text-muted-foreground">
+                      Configure your payment gateway
+                    </p>
+                  </div>
+                </div>
+
+                {/* Info box */}
+                <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm text-amber-900 space-y-1">
+                  <p className="font-semibold">Where to find your Key ID</p>
+                  <p className="text-xs text-amber-800 leading-relaxed">
+                    Log in to your{" "}
+                    <span className="font-medium">Razorpay Dashboard</span> →
+                    Settings → API Keys. Your Key ID starts with{" "}
+                    <code className="bg-amber-100 px-1 rounded font-mono text-xs">
+                      rzp_live_
+                    </code>{" "}
+                    (production) or{" "}
+                    <code className="bg-amber-100 px-1 rounded font-mono text-xs">
+                      rzp_test_
+                    </code>{" "}
+                    (test mode).
+                  </p>
+                </div>
+
+                {/* Key input */}
+                <div className="space-y-2">
+                  <Label htmlFor="razorpay-key" className="text-sm font-medium">
+                    Razorpay Key ID
+                  </Label>
+                  <div className="relative">
+                    <Input
+                      id="razorpay-key"
+                      type={showKey ? "text" : "password"}
+                      placeholder="rzp_live_xxxxxxxxxxxx"
+                      value={razorpayKey}
+                      onChange={(e) => setRazorpayKey(e.target.value)}
+                      className="pr-10 font-mono text-sm"
+                      data-ocid="admin.razorpay_key.input"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowKey((v) => !v)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                      data-ocid="admin.razorpay_key.toggle"
+                    >
+                      {showKey ? (
+                        <EyeOff className="w-4 h-4" />
+                      ) : (
+                        <Eye className="w-4 h-4" />
+                      )}
+                    </button>
+                  </div>
+                  {razorpayKey && (
+                    <p className="text-xs text-muted-foreground">
+                      Currently saved:{" "}
+                      <span className="font-mono">
+                        {razorpayKey.slice(0, 8)}
+                        {"•".repeat(Math.max(0, razorpayKey.length - 8))}
+                      </span>
+                    </p>
+                  )}
+                </div>
+
+                <Button
+                  onClick={handleSaveRazorpayKey}
+                  className="w-full bg-primary text-primary-foreground gap-2"
+                  data-ocid="admin.razorpay_key.save_button"
+                >
+                  <KeyRound className="w-4 h-4" />
+                  Save Key ID
+                </Button>
+
+                <p className="text-xs text-muted-foreground leading-relaxed border-t border-border pt-4">
+                  The Key ID is stored locally in your browser. It is used when
+                  customers make payments. Never share your Secret Key — only
+                  the Key ID (not Secret Key) is needed here.
+                </p>
               </div>
             </div>
           </TabsContent>

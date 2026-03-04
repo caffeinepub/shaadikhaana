@@ -3,59 +3,50 @@ import { Link, useNavigate, useSearch } from "@tanstack/react-router";
 import { Calendar, CheckCircle2, Home, Loader2, XCircle } from "lucide-react";
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
-import {
-  useConfirmBookingPayment,
-  useGetStripeSessionStatus,
-} from "../hooks/useQueries";
+import { useConfirmBookingPayment } from "../hooks/useQueries";
 
 export default function BookingSuccessPage() {
   const searchParams = useSearch({ strict: false }) as Record<string, string>;
-  const sessionId = searchParams.session_id || "";
+  const paymentId = searchParams.payment_id || "";
   const bookingId = searchParams.booking_id || "";
   const navigate = useNavigate();
+
   const [confirmed, setConfirmed] = useState(false);
   const [error, setError] = useState("");
 
-  const { data: sessionStatus, isLoading } =
-    useGetStripeSessionStatus(sessionId);
   const confirmPaymentMutation = useConfirmBookingPayment();
   const confirmPaymentMutate = confirmPaymentMutation.mutateAsync;
 
   useEffect(() => {
-    if (!sessionStatus || confirmed) return;
-
-    if (sessionStatus.__kind__ === "completed") {
-      confirmPaymentMutate({
-        bookingId,
-        paymentIntentId: sessionId,
-      })
-        .then(() => {
-          setConfirmed(true);
-        })
-        .catch((err) => {
-          console.error("Failed to confirm payment:", err);
-          setConfirmed(true);
-        });
-    } else if (sessionStatus.__kind__ === "failed") {
-      setError(sessionStatus.failed.error || "Payment failed");
+    if (!paymentId || !bookingId) {
+      navigate({ to: "/" });
+      return;
     }
-  }, [sessionStatus, confirmed, bookingId, sessionId, confirmPaymentMutate]);
 
-  if (!sessionId) {
-    navigate({ to: "/" });
-    return null;
-  }
+    if (confirmed) return;
+
+    confirmPaymentMutate({ bookingId, paymentIntentId: paymentId })
+      .then(() => {
+        setConfirmed(true);
+      })
+      .catch((err) => {
+        console.error("Failed to confirm payment:", err);
+        setError("Unable to confirm your booking. Please contact support.");
+      });
+  }, [paymentId, bookingId, confirmed, confirmPaymentMutate, navigate]);
+
+  const isLoading = !confirmed && !error;
 
   return (
     <div className="min-h-screen bg-muted/20 flex items-center justify-center">
       <div className="container mx-auto px-4 max-w-md">
         <div className="bg-card rounded-2xl border border-border shadow-card p-8 text-center">
-          {isLoading ||
-          (sessionStatus?.__kind__ === "completed" && !confirmed && !error) ? (
+          {isLoading ? (
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               className="space-y-4"
+              data-ocid="booking_success.loading_state"
             >
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
                 <Loader2 className="w-8 h-8 text-primary animate-spin" />
@@ -73,23 +64,27 @@ export default function BookingSuccessPage() {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               className="space-y-4"
+              data-ocid="booking_success.error_state"
             >
               <div className="w-16 h-16 bg-destructive/10 rounded-full flex items-center justify-center mx-auto">
                 <XCircle className="w-8 h-8 text-destructive" />
               </div>
               <h2 className="font-display text-xl font-bold text-foreground">
-                Payment Failed
+                Booking Confirmation Failed
               </h2>
               <p className="text-muted-foreground text-sm">{error}</p>
               <div className="flex flex-col gap-2 mt-4">
                 <Button
                   onClick={() => navigate({ to: "/search" })}
                   className="w-full"
+                  data-ocid="booking_success.browse_venues.button"
                 >
                   Browse Other Venues
                 </Button>
                 <Button variant="outline" asChild className="w-full">
-                  <Link to="/">Go Home</Link>
+                  <Link to="/" data-ocid="booking_success.go_home.link">
+                    Go Home
+                  </Link>
                 </Button>
               </div>
             </motion.div>
@@ -98,6 +93,7 @@ export default function BookingSuccessPage() {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               className="space-y-4"
+              data-ocid="booking_success.success_state"
             >
               <motion.div
                 initial={{ scale: 0 }}
