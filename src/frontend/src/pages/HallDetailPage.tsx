@@ -243,7 +243,9 @@ export default function HallDetailPage() {
               <div className="bg-card rounded-xl p-4 border border-border text-center">
                 <Calendar className="w-5 h-5 text-primary mx-auto mb-1" />
                 <p className="font-bold text-lg text-foreground font-body">
-                  {formatPrice(hall.pricePerDay)}
+                  {hall.pricePerDay === BigInt(0)
+                    ? "On Demand"
+                    : formatPrice(hall.pricePerDay)}
                 </p>
                 <p className="text-xs text-muted-foreground">Per Day</p>
               </div>
@@ -370,13 +372,26 @@ export default function HallDetailPage() {
           <div className="lg:col-span-1">
             <div className="sticky top-24 bg-card rounded-2xl border border-border shadow-card p-6">
               <div className="mb-4">
-                <p className="text-sm text-muted-foreground mb-1">
-                  Starting from
-                </p>
-                <p className="font-display text-3xl font-bold text-primary">
-                  {formatPrice(hall.pricePerDay)}
-                </p>
-                <p className="text-sm text-muted-foreground">per day</p>
+                {hall.pricePerDay === BigInt(0) ? (
+                  <>
+                    <p className="font-display text-2xl font-bold text-primary">
+                      Price on Demand
+                    </p>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      Contact the venue directly for pricing
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <p className="text-sm text-muted-foreground mb-1">
+                      Starting from
+                    </p>
+                    <p className="font-display text-3xl font-bold text-primary">
+                      {formatPrice(hall.pricePerDay)}
+                    </p>
+                    <p className="text-sm text-muted-foreground">per day</p>
+                  </>
+                )}
               </div>
 
               <Separator className="my-4" />
@@ -406,19 +421,33 @@ export default function HallDetailPage() {
                 </div>
               </div>
 
-              <Button
-                className="w-full gap-2 bg-primary text-primary-foreground h-12 text-base font-semibold shadow-gold hover:shadow-gold-sm transition-all"
-                onClick={handleBook}
-                data-ocid="hall.book.primary_button"
-              >
-                <Calendar className="w-5 h-5" />
-                Book This Venue
-              </Button>
-              <p className="text-center text-xs text-muted-foreground mt-3">
-                {identity
-                  ? "Select dates in the next step"
-                  : "Sign in required to book"}
-              </p>
+              {hall.pricePerDay === BigInt(0) ? (
+                <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-center">
+                  <p className="text-sm font-semibold text-amber-900 mb-1">
+                    Price on Demand
+                  </p>
+                  <p className="text-xs text-amber-700 leading-relaxed">
+                    Contact the venue using the details above to get a quote and
+                    proceed with your booking.
+                  </p>
+                </div>
+              ) : (
+                <>
+                  <Button
+                    className="w-full gap-2 bg-primary text-primary-foreground h-12 text-base font-semibold shadow-gold hover:shadow-gold-sm transition-all"
+                    onClick={handleBook}
+                    data-ocid="hall.book.primary_button"
+                  >
+                    <Calendar className="w-5 h-5" />
+                    Book This Venue
+                  </Button>
+                  <p className="text-center text-xs text-muted-foreground mt-3">
+                    {identity
+                      ? "Select dates in the next step"
+                      : "Sign in required to book"}
+                  </p>
+                </>
+              )}
 
               <Separator className="my-4" />
 

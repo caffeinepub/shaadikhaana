@@ -53,8 +53,13 @@ export default function HallForm({ hall, onClose }: HallFormProps) {
     hall ? Number(hall.capacity).toString() : "",
   );
   const [size, setSize] = useState(hall ? Number(hall.size).toString() : "");
+  const [priceOnDemand, setPriceOnDemand] = useState(
+    hall ? hall.pricePerDay === BigInt(0) : false,
+  );
   const [pricePerDay, setPricePerDay] = useState(
-    hall ? (Number(hall.pricePerDay) / 100).toString() : "",
+    hall && hall.pricePerDay > BigInt(0)
+      ? (Number(hall.pricePerDay) / 100).toString()
+      : "",
   );
   const [selectedFacilities, setSelectedFacilities] = useState<Facility[]>(
     hall?.facilities || [],
@@ -74,7 +79,7 @@ export default function HallForm({ hall, onClose }: HallFormProps) {
     city &&
     address.trim() &&
     capacity &&
-    pricePerDay &&
+    (priceOnDemand || pricePerDay) &&
     contactPhone.trim();
 
   const handleSave = async () => {
@@ -90,7 +95,9 @@ export default function HallForm({ hall, onClose }: HallFormProps) {
         address: address.trim(),
         capacity: BigInt(Number.parseInt(capacity)),
         size: BigInt(Number.parseInt(size) || 0),
-        pricePerDay: BigInt(Math.round(Number.parseFloat(pricePerDay) * 100)),
+        pricePerDay: priceOnDemand
+          ? BigInt(0)
+          : BigInt(Math.round(Number.parseFloat(pricePerDay) * 100)),
         facilities: selectedFacilities,
         photoIds: hall?.photoIds || [],
         contactPhone: contactPhone.trim(),
@@ -255,21 +262,74 @@ export default function HallForm({ hall, onClose }: HallFormProps) {
                   />
                 </div>
               </div>
-              <div>
-                <Label className="mb-1.5 block">Price / Day (₹) *</Label>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">
-                    ₹
-                  </span>
-                  <Input
-                    type="number"
-                    placeholder="e.g., 50000"
-                    value={pricePerDay}
-                    onChange={(e) => setPricePerDay(e.target.value)}
-                    className="pl-7"
-                    min="0"
+              <div className="space-y-3">
+                {/* Price on Demand toggle */}
+                <div className="flex items-start gap-3 p-3 bg-amber-50 border border-amber-200 rounded-xl">
+                  <Checkbox
+                    id="price-on-demand"
+                    checked={priceOnDemand}
+                    onCheckedChange={(v) => {
+                      setPriceOnDemand(v === true);
+                      if (v === true) setPricePerDay("");
+                    }}
                   />
+                  <div>
+                    <label
+                      htmlFor="price-on-demand"
+                      className="font-medium text-sm cursor-pointer text-amber-900"
+                    >
+                      Price on Demand
+                    </label>
+                    <p className="text-xs text-amber-700 mt-0.5 leading-snug">
+                      Customers will see "Contact for Price" instead of a fixed
+                      price. Your actual pricing is only used for our internal
+                      2.5% booking charge calculation — it will NOT be shown on
+                      the website.
+                    </p>
+                  </div>
                 </div>
+
+                {priceOnDemand ? (
+                  <div>
+                    <Label className="mb-1.5 block">
+                      Your Price / Day (₹) — Internal Only *
+                    </Label>
+                    <div className="relative">
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">
+                        ₹
+                      </span>
+                      <Input
+                        type="number"
+                        placeholder="e.g., 50000 (not shown to customers)"
+                        value={pricePerDay}
+                        onChange={(e) => setPricePerDay(e.target.value)}
+                        className="pl-7 border-amber-300 focus:border-amber-500"
+                        min="0"
+                      />
+                    </div>
+                    <p className="text-xs text-amber-700 mt-1">
+                      This price is used only to calculate the 2.5% ShaadiKhaana
+                      booking charge. It will not be displayed to customers.
+                    </p>
+                  </div>
+                ) : (
+                  <div>
+                    <Label className="mb-1.5 block">Price / Day (₹) *</Label>
+                    <div className="relative">
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">
+                        ₹
+                      </span>
+                      <Input
+                        type="number"
+                        placeholder="e.g., 50000"
+                        value={pricePerDay}
+                        onChange={(e) => setPricePerDay(e.target.value)}
+                        className="pl-7"
+                        min="0"
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>

@@ -196,7 +196,7 @@ export default function HomePage() {
             {[
               { value: "10+", label: "Cities Covered" },
               { value: "Free", label: "To List Your Hall" },
-              { value: "3.5%", label: "Booking Charge Only" },
+              { value: "2.5%", label: "Booking Charge Only" },
               { value: "100%", label: "Secure Payments" },
             ].map((stat, i) => (
               <motion.div
@@ -254,7 +254,7 @@ export default function HomePage() {
                 step: "02",
                 icon: Calendar,
                 title: "Book & Pay Securely",
-                desc: "Select your dates, review the pricing, and complete your booking with our secure Stripe-powered payment gateway.",
+                desc: "Select your dates, review the pricing, and complete your booking with our secure Razorpay-powered payment gateway.",
                 color: "from-amber-50 to-amber-100/50",
                 iconBg: "bg-amber-100",
                 iconColor: "text-amber-600",
@@ -411,7 +411,7 @@ export default function HomePage() {
                   },
                   {
                     title: "Secure Payments",
-                    desc: "All transactions are secured via Stripe with transparent pricing and no hidden fees.",
+                    desc: "All transactions are secured via Razorpay with transparent pricing and no hidden fees.",
                   },
                   {
                     title: "Flexible Cancellation",

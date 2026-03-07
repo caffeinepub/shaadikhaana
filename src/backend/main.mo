@@ -6,7 +6,7 @@ import Nat "mo:core/Nat";
 import Nat8 "mo:core/Nat8";
 import Iter "mo:core/Iter";
 import Principal "mo:core/Principal";
-import Migration "migration";
+
 import Order "mo:core/Order";
 import Time "mo:core/Time";
 import Blob "mo:core/Blob";
@@ -16,7 +16,7 @@ import AccessControl "authorization/access-control";
 import MixinAuthorization "authorization/MixinAuthorization";
 import MixinStorage "blob-storage/Mixin";
 
-(with migration = Migration.run)
+
 actor {
   // Include authentication and file storage
   let accessControlState = AccessControl.initState();

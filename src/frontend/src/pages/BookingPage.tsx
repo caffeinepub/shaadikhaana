@@ -134,13 +134,13 @@ export default function BookingPage() {
     [hall, totalDays],
   );
 
-  // 3.5% platform fee in paise (prices stored in paise)
+  // 2.5% platform fee in paise (prices stored in paise)
   const platformFee = useMemo(
-    () => (hallPrice * BigInt(35)) / BigInt(1000),
+    () => (hallPrice * BigInt(25)) / BigInt(1000),
     [hallPrice],
   );
 
-  // Balance the customer pays directly to hall owner (96.5%)
+  // Balance the customer pays directly to hall owner (97.5%)
   const balanceDue = useMemo(
     () => hallPrice - platformFee,
     [hallPrice, platformFee],
@@ -576,10 +576,10 @@ export default function BookingPage() {
                           {formatPrice(hallPrice)}
                         </span>
                       </div>
-                      {/* Line 2: Booking Charge (3.5%) */}
+                      {/* Line 2: Booking Charge (2.5%) */}
                       <div className="flex justify-between text-sm">
                         <span className="text-muted-foreground">
-                          Booking Charge (3.5%) — paid to ShaadiKhaana
+                          Booking Charge (2.5%) — paid to ShaadiKhaana
                         </span>
                         <span className="font-medium text-primary">
                           {formatPrice(platformFee)}
@@ -588,7 +588,7 @@ export default function BookingPage() {
                       {/* Line 3: Balance to hall owner */}
                       <div className="flex justify-between text-sm">
                         <span className="text-muted-foreground">
-                          Balance Due to Hall Owner (96.5%) — pay directly
+                          Balance Due to Hall Owner (97.5%) — pay directly
                         </span>
                         <span className="font-medium">
                           {formatPrice(balanceDue)}
@@ -601,10 +601,10 @@ export default function BookingPage() {
                         <p className="text-xs text-foreground leading-relaxed">
                           You pay only the{" "}
                           <span className="font-semibold text-primary">
-                            3.5% booking charge
+                            2.5% booking charge
                           </span>{" "}
                           online to lock your date. The remaining{" "}
-                          <span className="font-semibold">96.5%</span> is paid
+                          <span className="font-semibold">97.5%</span> is paid
                           directly to the hall owner.
                         </p>
                       </div>
@@ -623,7 +623,7 @@ export default function BookingPage() {
                           • 3–6 days before event: 50% refund of hall price
                         </li>
                         <li>• Less than 3 days: No refund</li>
-                        <li>• Booking charge (3.5%) is non-refundable</li>
+                        <li>• Booking charge (2.5%) is non-refundable</li>
                       </ul>
                     </div>
 
@@ -696,7 +696,7 @@ export default function BookingPage() {
                       ) : (
                         <>
                           <CreditCard className="w-4 h-4" />
-                          Pay with Razorpay — {formatPrice(platformFee)}
+                          Pay Booking Charge (2.5%) — {formatPrice(platformFee)}
                         </>
                       )}
                     </Button>
@@ -754,7 +754,7 @@ export default function BookingPage() {
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">
-                      Booking Charge (3.5%)
+                      Booking Charge (2.5%)
                     </span>
                     <span className="text-primary font-medium">
                       {formatPrice(platformFee)}

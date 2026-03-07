@@ -10,7 +10,6 @@ export default function BookingSuccessPage() {
   const paymentId = searchParams.payment_id || "";
   const bookingId = searchParams.booking_id || "";
   const navigate = useNavigate();
-
   const [confirmed, setConfirmed] = useState(false);
   const [error, setError] = useState("");
 
@@ -114,7 +113,7 @@ export default function BookingSuccessPage() {
                 <p className="font-semibold mb-1">What's Next?</p>
                 <ul className="text-xs space-y-1.5 text-green-700">
                   <li>
-                    ✓ Your booking charge (3.5%) has been paid to ShaadiKhaana
+                    ✓ Your booking charge (2.5%) has been paid to ShaadiKhaana
                   </li>
                   <li>✓ The date is now locked and reserved for you</li>
                   <li>✓ The hall owner has been notified of your booking</li>

@@ -300,9 +300,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 </span>
               </div>
               <p className="text-sm text-background/60 max-w-xs leading-relaxed">
-                India &amp; Pakistan's premier platform for discovering and
-                booking the perfect venue for your celebrations — weddings,
-                parties, and everything in between.
+                India's premier platform for discovering and booking the perfect
+                venue for your celebrations — weddings, parties, and everything
+                in between.
               </p>
             </div>
             <div>

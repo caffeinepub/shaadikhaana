@@ -75,8 +75,14 @@ export default function HallCard({
             <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
             {/* Price badge */}
             <div className="absolute bottom-3 right-3 bg-primary/90 backdrop-blur-sm text-primary-foreground px-3 py-1 rounded-full text-sm font-semibold font-body">
-              {formatPrice(hall.pricePerDay)}
-              <span className="text-xs opacity-80">/day</span>
+              {hall.pricePerDay === BigInt(0) ? (
+                "Price on Demand"
+              ) : (
+                <>
+                  {formatPrice(hall.pricePerDay)}
+                  <span className="text-xs opacity-80">/day</span>
+                </>
+              )}
             </div>
             {/* City badge */}
             <div className="absolute top-3 left-3 bg-black/50 backdrop-blur-sm text-white px-2.5 py-1 rounded-full text-xs font-medium flex items-center gap-1">
@@ -132,15 +138,23 @@ export default function HallCard({
             {/* CTA */}
             <div className="flex items-center justify-between">
               <div>
-                <span className="text-xs text-muted-foreground">
-                  Starting from
-                </span>
-                <p className="text-primary font-bold text-base font-body">
-                  {formatPrice(hall.pricePerDay)}
-                  <span className="text-xs font-normal text-muted-foreground">
-                    /day
-                  </span>
-                </p>
+                {hall.pricePerDay === BigInt(0) ? (
+                  <p className="text-primary font-bold text-base font-body">
+                    Price on Demand
+                  </p>
+                ) : (
+                  <>
+                    <span className="text-xs text-muted-foreground">
+                      Starting from
+                    </span>
+                    <p className="text-primary font-bold text-base font-body">
+                      {formatPrice(hall.pricePerDay)}
+                      <span className="text-xs font-normal text-muted-foreground">
+                        /day
+                      </span>
+                    </p>
+                  </>
+                )}
               </div>
               <div className="flex items-center gap-1 text-sm text-primary font-medium group-hover:gap-2 transition-all">
                 View Details

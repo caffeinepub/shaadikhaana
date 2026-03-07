@@ -10,7 +10,7 @@ const sections = [
     content: [
       {
         heading: "1.1 Booking Process",
-        text: "All bookings on ShaadiKhaana are subject to availability. A booking is considered confirmed only after successful payment is processed through our Stripe-powered payment gateway.",
+        text: "All bookings on ShaadiKhaana are subject to availability. A booking is considered confirmed only after successful payment is processed through our Razorpay-powered payment gateway.",
       },
       {
         heading: "1.2 Booking Confirmation",
@@ -21,12 +21,12 @@ const sections = [
         text: "All prices displayed are in Indian Rupees (INR) and include applicable taxes unless otherwise stated. Prices are per day unless specifically mentioned as per hour or per event.",
       },
       {
-        heading: "1.4 Booking Charge (3.5%)",
-        text: "ShaadiKhaana charges a 3.5% booking charge on the total hall price for each booking. This fee is paid online at the time of booking and covers platform maintenance, payment processing, and customer support. The remaining 96.5% of the hall price is paid directly to the hall owner. The 3.5% booking charge is non-refundable.",
+        heading: "1.4 Booking Charge (2.5%)",
+        text: "ShaadiKhaana charges a 2.5% booking charge on the total hall price for each booking. This fee is paid online at the time of booking and covers platform maintenance, payment processing, and customer support. The remaining 97.5% of the hall price is paid directly to the hall owner. The 2.5% booking charge is non-refundable and is separate from the hall price quoted by the owner.",
       },
       {
         heading: "1.5 Direct Payment to Hall Owner",
-        text: "The remaining 96.5% of the hall price is settled directly between the customer and the hall owner, outside of the ShaadiKhaana platform. ShaadiKhaana is not responsible for any disputes arising from direct payments between customers and hall owners.",
+        text: "The remaining 97.5% of the hall price is settled directly between the customer and the hall owner, outside of the ShaadiKhaana platform. ShaadiKhaana is not responsible for any disputes arising from direct payments between customers and hall owners.",
       },
       {
         heading: "1.6 Accuracy of Information",
@@ -50,15 +50,15 @@ const sections = [
       },
       {
         heading: "2.2 Non-Refundable Booking Charge",
-        text: "The 3.5% booking charge paid to ShaadiKhaana is non-refundable under any circumstances, including cancellations, venue issues, or force majeure events.",
+        text: "The 2.5% booking charge paid to ShaadiKhaana is non-refundable under any circumstances, including cancellations, venue issues, or force majeure events.",
       },
       {
         heading: "2.3 Venue Cancellations",
-        text: "If a venue cancels a confirmed booking, the customer will receive a full refund of the hall price AND the service fee. ShaadiKhaana will make every effort to find an alternative venue for the customer.",
+        text: "If a venue cancels a confirmed booking, the customer will receive a full refund of the hall price paid directly to the hall owner. ShaadiKhaana will make every effort to find an alternative venue for the customer.",
       },
       {
         heading: "2.4 Refund Processing",
-        text: "Approved refunds will be processed within 5-10 business days to the original payment method. Processing times may vary depending on your bank or payment provider.",
+        text: "Refunds for the hall price portion will be processed according to the hall owner's decision and the mode of payment decided by them. The timeline and method of refund are determined by the hall owner directly. The 2.5% ShaadiKhaana booking charge is non-refundable regardless of the outcome.",
       },
       {
         heading: "2.5 Dispute Resolution",
@@ -73,11 +73,11 @@ const sections = [
     content: [
       {
         heading: "3.1 Payment Methods",
-        text: "ShaadiKhaana accepts all major credit cards, debit cards, and UPI payments through our Stripe payment gateway. All transactions are encrypted and secure.",
+        text: "ShaadiKhaana accepts all major credit cards, debit cards, UPI, NetBanking, and wallet payments through Razorpay. All transactions are encrypted and secure.",
       },
       {
         heading: "3.2 Payment Security",
-        text: "All payments are processed by Stripe, a globally trusted payment processor. ShaadiKhaana does not store any credit card or sensitive payment information on our servers.",
+        text: "All payments are processed by Razorpay, a trusted Indian payment processor. ShaadiKhaana does not store any credit card or sensitive payment information on our servers.",
       },
       {
         heading: "3.3 Currency",
@@ -221,7 +221,7 @@ export default function TermsPage() {
                                   Hall Price Refund
                                 </th>
                                 <th className="text-left text-xs font-semibold text-foreground p-3">
-                                  Booking Charge (3.5%)
+                                  Booking Charge (2.5%)
                                 </th>
                               </tr>
                             </thead>
