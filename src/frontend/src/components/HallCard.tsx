@@ -15,14 +15,15 @@ interface HallCardProps {
 }
 
 const facilityColorMap: Partial<Record<Facility, string>> = {
-  [Facility.ac]: "bg-blue-50 text-blue-700 border-blue-100",
-  [Facility.wifi]: "bg-purple-50 text-purple-700 border-purple-100",
-  [Facility.catering]: "bg-orange-50 text-orange-700 border-orange-100",
-  [Facility.parking]: "bg-green-50 text-green-700 border-green-100",
-  [Facility.stage]: "bg-pink-50 text-pink-700 border-pink-100",
-  [Facility.soundSystem]: "bg-indigo-50 text-indigo-700 border-indigo-100",
-  [Facility.projector]: "bg-yellow-50 text-yellow-700 border-yellow-100",
-  [Facility.restrooms]: "bg-teal-50 text-teal-700 border-teal-100",
+  [Facility.ac]: "bg-blue-900/40 text-blue-300 border-blue-700/40",
+  [Facility.wifi]: "bg-purple-900/40 text-purple-300 border-purple-700/40",
+  [Facility.catering]: "bg-amber-900/40 text-amber-300 border-amber-700/40",
+  [Facility.parking]: "bg-green-900/40 text-green-300 border-green-700/40",
+  [Facility.stage]: "bg-pink-900/40 text-pink-300 border-pink-700/40",
+  [Facility.soundSystem]:
+    "bg-indigo-900/40 text-indigo-300 border-indigo-700/40",
+  [Facility.projector]: "bg-yellow-900/40 text-yellow-300 border-yellow-700/40",
+  [Facility.restrooms]: "bg-teal-900/40 text-teal-300 border-teal-700/40",
 };
 
 function getHallImage(hall: Hall): string {
@@ -63,7 +64,7 @@ export default function HallCard({
         className="block"
         data-ocid={`hall.detail.link.${index + 1}`}
       >
-        <div className="bg-card rounded-2xl overflow-hidden border border-border shadow-card hover:shadow-card-hover transition-all duration-300 group-hover:-translate-y-0.5">
+        <div className="bg-card rounded-lg overflow-hidden mughal-border shadow-card hover:shadow-card-hover transition-all duration-300 group-hover:-translate-y-0.5">
           {/* Image */}
           <div className="relative aspect-[16/10] overflow-hidden bg-muted">
             <img
@@ -72,20 +73,20 @@ export default function HallCard({
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               loading="lazy"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
             {/* Price badge */}
-            <div className="absolute bottom-3 right-3 bg-primary/90 backdrop-blur-sm text-primary-foreground px-3 py-1 rounded-full text-sm font-semibold font-body">
+            <div className="absolute bottom-3 right-3 bg-[oklch(0.10_0.015_25/0.85)] backdrop-blur-sm border border-gold/30 text-gold px-3 py-1 rounded-full text-sm font-semibold font-body shadow-gold-sm">
               {hall.pricePerDay === BigInt(0) ? (
                 "Price on Demand"
               ) : (
                 <>
                   {formatPrice(hall.pricePerDay)}
-                  <span className="text-xs opacity-80">/day</span>
+                  <span className="text-xs opacity-70">/day</span>
                 </>
               )}
             </div>
             {/* City badge */}
-            <div className="absolute top-3 left-3 bg-black/50 backdrop-blur-sm text-white px-2.5 py-1 rounded-full text-xs font-medium flex items-center gap-1">
+            <div className="absolute top-3 left-3 bg-black/60 backdrop-blur-sm text-foreground/80 px-2.5 py-1 rounded-full text-xs font-medium flex items-center gap-1 border border-white/10">
               <MapPin className="w-3 h-3" />
               {hall.city}
             </div>
@@ -129,7 +130,10 @@ export default function HallCard({
                 </span>
               ))}
               {extraCount > 0 && (
-                <Badge variant="outline" className="text-xs">
+                <Badge
+                  variant="outline"
+                  className="text-xs border-gold/20 text-gold/70"
+                >
                   +{extraCount} more
                 </Badge>
               )}
@@ -139,7 +143,7 @@ export default function HallCard({
             <div className="flex items-center justify-between">
               <div>
                 {hall.pricePerDay === BigInt(0) ? (
-                  <p className="text-primary font-bold text-base font-body">
+                  <p className="text-gold font-bold text-base font-body">
                     Price on Demand
                   </p>
                 ) : (
@@ -147,7 +151,7 @@ export default function HallCard({
                     <span className="text-xs text-muted-foreground">
                       Starting from
                     </span>
-                    <p className="text-primary font-bold text-base font-body">
+                    <p className="text-gold font-bold text-base font-body">
                       {formatPrice(hall.pricePerDay)}
                       <span className="text-xs font-normal text-muted-foreground">
                         /day
@@ -156,7 +160,7 @@ export default function HallCard({
                   </>
                 )}
               </div>
-              <div className="flex items-center gap-1 text-sm text-primary font-medium group-hover:gap-2 transition-all">
+              <div className="flex items-center gap-1 text-sm text-gold/70 font-medium group-hover:gap-2 group-hover:text-gold transition-all duration-200">
                 View Details
                 <ChevronRight className="w-4 h-4" />
               </div>

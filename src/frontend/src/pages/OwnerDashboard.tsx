@@ -72,14 +72,14 @@ function NewBookingsPanel({
       className="mb-6 bg-amber-50 border border-amber-300 rounded-2xl p-5 shadow-sm"
     >
       <div className="flex items-center gap-2 mb-4">
-        <div className="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center">
-          <Bell className="w-4 h-4 text-amber-700" />
+        <div className="w-8 h-8 bg-amber-900/40 rounded-full flex items-center justify-center">
+          <Bell className="w-4 h-4 text-amber-400" />
         </div>
         <div>
-          <h3 className="font-semibold text-amber-900 text-sm">
+          <h3 className="font-semibold text-amber-300 text-sm">
             New Bookings Received
           </h3>
-          <p className="text-xs text-amber-700">
+          <p className="text-xs text-amber-400">
             {newBookings.length} new booking
             {newBookings.length !== 1 ? "s" : ""} in the last 48 hours
           </p>
@@ -97,30 +97,30 @@ function NewBookingsPanel({
             <div
               key={booking.id}
               data-ocid={`owner.booking.new_badge.${idx + 1}`}
-              className="flex items-start justify-between gap-3 bg-white/70 border border-amber-200 rounded-xl p-3 flex-wrap"
+              className="flex items-start justify-between gap-3 bg-amber-900/20 border border-amber-700/40 rounded-xl p-3 flex-wrap"
             >
               <div className="space-y-0.5">
-                <p className="font-semibold text-sm text-amber-900">
+                <p className="font-semibold text-sm text-amber-300">
                   {hall?.name || "Your Hall"}
                 </p>
-                <p className="text-xs text-amber-700">
+                <p className="text-xs text-amber-400">
                   Customer: {shortCustomerId}
                 </p>
-                <p className="text-xs text-amber-700">
+                <p className="text-xs text-amber-400">
                   {formatDate(booking.startDate)} —{" "}
                   {formatDate(booking.endDate)}
                 </p>
-                <p className="text-xs text-amber-700">
+                <p className="text-xs text-amber-400">
                   {booking.eventType} ·{" "}
                   {Number(booking.guestCount).toLocaleString("en-IN")} guests
                 </p>
               </div>
               <div className="text-right">
-                <span className="inline-flex items-center gap-1 text-xs font-bold text-amber-700 bg-amber-100 border border-amber-300 px-2 py-0.5 rounded-full">
+                <span className="inline-flex items-center gap-1 text-xs font-bold text-amber-300 bg-amber-900/40 border border-amber-700/50 px-2 py-0.5 rounded-full">
                   <Bell className="w-3 h-3" />
                   NEW
                 </span>
-                <p className="text-xs font-semibold text-amber-900 mt-1">
+                <p className="text-xs font-semibold text-amber-300 mt-1">
                   {formatPrice(booking.hallPriceTotal)}
                 </p>
               </div>
@@ -184,7 +184,7 @@ function OwnerHallCard({
             </div>
             <Badge
               variant={hall.isActive ? "default" : "secondary"}
-              className={`shrink-0 text-xs ${hall.isActive ? "bg-green-100 text-green-800" : ""}`}
+              className={`shrink-0 text-xs ${hall.isActive ? "bg-green-900/40 text-green-300" : ""}`}
             >
               {hall.isActive ? "Active" : "Inactive"}
             </Badge>
@@ -408,22 +408,22 @@ export default function OwnerDashboard() {
               label: "Total Bookings",
               value: totalBookings.toString(),
               icon: Calendar,
-              color: "text-blue-600",
-              bg: "bg-blue-50",
+              color: "text-blue-400",
+              bg: "bg-blue-900/30",
             },
             {
               label: "Pending",
               value: pendingBookings.toString(),
               icon: Users,
-              color: "text-amber-600",
-              bg: "bg-amber-50",
+              color: "text-amber-400",
+              bg: "bg-amber-900/30",
             },
             {
               label: "Total Earnings",
               value: formatPrice(totalEarnings),
               icon: DollarSign,
-              color: "text-green-600",
-              bg: "bg-green-50",
+              color: "text-green-400",
+              bg: "bg-green-900/30",
             },
           ].map((stat) => (
             <div

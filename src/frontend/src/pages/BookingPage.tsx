@@ -611,11 +611,11 @@ export default function BookingPage() {
                     </div>
 
                     {/* Terms */}
-                    <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
-                      <h4 className="font-semibold text-sm text-amber-900 mb-2">
+                    <div className="bg-amber-900/20 border border-amber-700/40 rounded-xl p-4">
+                      <h4 className="font-semibold text-sm text-amber-300 mb-2">
                         Cancellation Policy
                       </h4>
-                      <ul className="text-xs text-amber-800 space-y-1">
+                      <ul className="text-xs text-amber-400 space-y-1">
                         <li>
                           • 7+ days before event: 80% refund of hall price
                         </li>

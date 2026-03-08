@@ -55,9 +55,9 @@ export default {
           foreground: "oklch(var(--card-foreground))",
         },
         gold: {
-          DEFAULT: "oklch(var(--gold))",
-          light: "oklch(var(--gold-light))",
-          dark: "oklch(var(--gold-dark))",
+          DEFAULT: "oklch(var(--gold) / <alpha-value>)",
+          light: "oklch(var(--gold-light) / <alpha-value>)",
+          dark: "oklch(var(--gold-dark) / <alpha-value>)",
         },
         chart: {
           1: "oklch(var(--chart-1))",
@@ -85,12 +85,12 @@ export default {
         "2xl": "calc(var(--radius) + 8px)",
       },
       boxShadow: {
-        xs: "0 1px 2px 0 oklch(0.18 0.028 30 / 0.05)",
-        card: "0 2px 8px -1px oklch(0.18 0.028 30 / 0.08), 0 1px 3px -1px oklch(0.18 0.028 30 / 0.06)",
-        "card-hover": "0 12px 32px -4px oklch(0.18 0.028 30 / 0.14), 0 4px 8px -2px oklch(0.18 0.028 30 / 0.08)",
-        gold: "0 4px 24px -4px oklch(0.75 0.14 65 / 0.35)",
-        "gold-sm": "0 2px 12px -2px oklch(0.75 0.14 65 / 0.25)",
-        inner: "inset 0 2px 4px 0 oklch(0.18 0.028 30 / 0.06)",
+        xs: "0 1px 2px 0 oklch(0.10 0.015 25 / 0.4)",
+        card: "0 4px 24px -4px oklch(0.10 0.015 25 / 0.6), 0 1px 4px oklch(0.10 0.015 25 / 0.4)",
+        "card-hover": "0 8px 40px -4px oklch(0.10 0.015 25 / 0.7), 0 0 20px oklch(0.72 0.165 68 / 0.15)",
+        gold: "0 0 24px oklch(0.72 0.165 68 / 0.35), 0 4px 16px oklch(0.72 0.165 68 / 0.2)",
+        "gold-sm": "0 0 12px oklch(0.72 0.165 68 / 0.25)",
+        inner: "inset 0 2px 4px 0 oklch(0.10 0.015 25 / 0.3)",
       },
       keyframes: {
         "accordion-down": {

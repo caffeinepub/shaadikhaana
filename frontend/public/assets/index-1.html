@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Jurists – Law Practice in Telangana | District Courts & High Court</title>
+  <meta name="description" content="The Jurists is a law practice handling litigation and legal advisory matters before District Courts and the High Court of Telangana."/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,500;1,700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #0a1628;
+      --navy-mid: #132240;
+      --navy-light: #1e3a5f;
+      --blue-accent: #1a56db;
+      --blue-bright: #3b82f6;
+      --white: #ffffff;
+      --off-white: #f8fafc;
+      --light-gray: #f1f5f9;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --text-mid: #475569;
+      --text-light: #94a3b8;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Outfit', sans-serif; background: var(--white); color: var(--text); overflow-x: hidden; }
+
+    /* ── BCI BAR ── */
+    .bci-bar {
+      background: var(--navy);
+      color: rgba(255,255,255,0.55);
+      font-size: 0.68rem;
+      text-align: center;
+      padding: 0.5rem 2rem;
+      letter-spacing: 0.03em;
+    }
+    .bci-bar a { color: var(--blue-bright); text-decoration: none; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 4rem;
+      height: 68px;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 1px 12px rgba(10,22,40,0.06);
+    }
+
+    .nav-logo { text-decoration: none; display: flex; align-items: center; gap: 0.75rem; }
+    .nav-logo-mark {
+      width: 36px; height: 36px;
+      background: var(--navy);
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 4px;
+    }
+    .nav-logo-mark svg { width: 20px; height: 20px; stroke: #fff; fill: none; stroke-width: 1.5; }
+    .nav-logo-text { line-height: 1.1; }
+    .nav-logo-name { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; color: var(--navy); }
+    .nav-logo-sub { font-size: 0.58rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-light); }
+
+    .nav-links { display: flex; align-items: center; gap: 0.25rem; list-style: none; }
+    .nav-links a { font-size: 0.82rem; font-weight: 500; color: var(--text-mid); text-decoration: none; padding: 0.45rem 0.85rem; border-radius: 6px; transition: all 0.2s; }
+    .nav-links a:hover { color: var(--navy); background: var(--light-gray); }
+    .nav-cta {
+      background: var(--navy) !important; color: var(--white) !important;
+      padding: 0.5rem 1.25rem !important; border-radius: 6px !important;
+      font-weight: 600 !important; letter-spacing: 0.02em;
+      transition: background 0.2s, transform 0.15s !important;
+    }
+    .nav-cta:hover { background: var(--blue-accent) !important; transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: calc(100vh - 105px);
+      display: grid; grid-template-columns: 1fr 1fr;
+      background: var(--white);
+    }
+
+    .hero-left {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 5rem 4rem 5rem 4rem;
+      position: relative;
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: #eff6ff; border: 1px solid #bfdbfe;
+      color: var(--blue-accent); font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.35rem 0.9rem; border-radius: 999px;
+      margin-bottom: 2rem; width: fit-content;
+      opacity: 0; animation: fadeUp 0.7s ease 0.1s forwards;
+    }
+    .hero-badge span { width: 6px; height: 6px; background: var(--blue-accent); border-radius: 50%; display: inline-block; }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 4vw, 3.8rem);
+      font-weight: 900; line-height: 1.08;
+      color: var(--navy); margin-bottom: 1.5rem;
+      opacity: 0; animation: fadeUp 0.7s ease 0.25s forwards;
+    }
+    .hero-title em { font-style: italic; color: var(--blue-accent); }
+
+    .hero-body {
+      font-size: 1rem; line-height: 1.8; color: var(--text-mid);
+      max-width: 480px; margin-bottom: 2rem; font-weight: 300;
+      opacity: 0; animation: fadeUp 0.7s ease 0.4s forwards;
+    }
+
+    .hero-contact-strip {
+      display: flex; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 2.5rem;
+      opacity: 0; animation: fadeUp 0.7s ease 0.5s forwards;
+    }
+    .hcs-item { display: flex; align-items: center; gap: 0.5rem; }
+    .hcs-item svg { width: 15px; height: 15px; stroke: var(--blue-accent); fill: none; stroke-width: 2; flex-shrink: 0; }
+    .hcs-item span, .hcs-item a { font-size: 0.83rem; color: var(--text-mid); text-decoration: none; font-weight: 400; }
+    .hcs-item a:hover { color: var(--blue-accent); }
+
+    .hero-actions {
+      display: flex; gap: 1rem; align-items: center;
+      opacity: 0; animation: fadeUp 0.7s ease 0.6s forwards;
+    }
+    .btn-primary {
+      background: var(--navy); color: var(--white);
+      padding: 0.85rem 2rem; border-radius: 8px;
+      font-size: 0.88rem; font-weight: 600; letter-spacing: 0.02em;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 14px rgba(10,22,40,0.2);
+      display: inline-block;
+    }
+    .btn-primary:hover { background: var(--blue-accent); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(26,86,219,0.3); }
+    .btn-secondary {
+      color: var(--navy); font-size: 0.88rem; font-weight: 600;
+      text-decoration: none; display: flex; align-items: center; gap: 0.4rem;
+      transition: gap 0.2s;
+    }
+    .btn-secondary:hover { gap: 0.65rem; color: var(--blue-accent); }
+
+    .hero-right {
+      background: var(--navy);
+      display: flex; align-items: center; justify-content: center;
+      padding: 5rem 3.5rem; position: relative; overflow: hidden;
+    }
+
+    .hero-right::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(26,86,219,0.25) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(59,130,246,0.15) 0%, transparent 50%);
+    }
+
+    /* Grid pattern */
+    .hero-right::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    .hero-panel {
+      position: relative; z-index: 1;
+      width: 100%; max-width: 380px;
+      opacity: 0; animation: fadeIn 1s ease 0.8s forwards;
+    }
+
+    .hero-panel-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px; padding: 2rem;
+      backdrop-filter: blur(10px);
+      margin-bottom: 1rem;
+    }
+
+    .panel-label {
+      font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--blue-bright); margin-bottom: 0.5rem; font-weight: 600;
+    }
+    .panel-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; font-style: italic;
+      color: rgba(255,255,255,0.9); line-height: 1.5;
+      margin-bottom: 0.5rem;
+    }
+    .panel-attr { font-size: 0.72rem; color: rgba(255,255,255,0.35); letter-spacing: 0.08em; }
+
+    .stat-grid {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 0.75rem;
+    }
+    .stat-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px; padding: 1rem 0.75rem; text-align: center;
+      transition: background 0.2s;
+    }
+    .stat-card:hover { background: rgba(255,255,255,0.09); }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.75rem; font-weight: 700;
+      color: var(--white); line-height: 1;
+    }
+    .stat-label { font-size: 0.62rem; color: rgba(255,255,255,0.4); margin-top: 0.3rem; letter-spacing: 0.08em; text-transform: uppercase; }
+
+    /* ── SHARED ── */
+    .section-label {
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--blue-accent); margin-bottom: 0.6rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 2.8vw, 2.6rem); font-weight: 700;
+      color: var(--navy); line-height: 1.2; margin-bottom: 0.75rem;
+    }
+    .section-sub { color: var(--text-mid); font-size: 0.97rem; line-height: 1.75; font-weight: 300; max-width: 560px; }
+    .divider { width: 40px; height: 3px; background: var(--blue-accent); border-radius: 2px; margin: 1.25rem 0; }
+
+    /* ── SERVICES ── */
+    #services { padding: 6rem 4rem; background: var(--navy); }
+    #services .section-title { color: var(--white); }
+    #services .section-sub { color: rgba(255,255,255,0.5); }
+    #services .section-label { color: var(--blue-bright); }
+
+    .services-grid {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 1.25rem; margin-top: 3.5rem;
+    }
+    .service-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px; padding: 2rem;
+      transition: all 0.3s; position: relative; overflow: hidden;
+    }
+    .service-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--blue-accent), var(--blue-bright));
+      transform: scaleX(0); transition: transform 0.3s; transform-origin: left;
+      border-radius: 2px 2px 0 0;
+    }
+    .service-card:hover { background: rgba(255,255,255,0.08); border-color: rgba(59,130,246,0.3); transform: translateY(-3px); }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-icon {
+      width: 40px; height: 40px; background: rgba(26,86,219,0.2);
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1.25rem;
+    }
+    .service-icon svg { width: 18px; height: 18px; stroke: var(--blue-bright); fill: none; stroke-width: 1.8; }
+    .service-num { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.15em; color: rgba(255,255,255,0.25); text-transform: uppercase; margin-bottom: 0.5rem; }
+    .service-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--white); margin-bottom: 0.6rem; }
+    .service-desc { font-size: 0.83rem; line-height: 1.7; color: rgba(255,255,255,0.45); font-weight: 300; }
+
+    /* ── ADVOCATES ── */
+    #advocates { padding: 6rem 4rem; background: var(--off-white); }
+    .advocate-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 2rem; margin-top: 3rem; }
+    .advocate-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 12px; padding: 2.5rem;
+      box-shadow: 0 2px 16px rgba(10,22,40,0.05);
+      transition: box-shadow 0.3s, transform 0.3s;
+    }
+    .advocate-card:hover { box-shadow: 0 8px 32px rgba(10,22,40,0.1); transform: translateY(-2px); }
+    .advocate-avatar {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: var(--navy); display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1.25rem;
+    }
+    .advocate-avatar svg { width: 28px; height: 28px; stroke: var(--blue-bright); fill: none; stroke-width: 1.5; }
+    .advocate-name { font-family: 'Playfair Display', serif; font-size: 1.35rem; font-weight: 700; color: var(--navy); margin-bottom: 0.2rem; }
+    .advocate-enroll { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--blue-accent); margin-bottom: 1rem; }
+    .advocate-courts { font-size: 0.84rem; color: var(--text-mid); line-height: 1.65; margin-bottom: 1rem; }
+    .advocate-areas { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem; }
+    .area-tag {
+      font-size: 0.68rem; font-weight: 500; letter-spacing: 0.04em;
+      background: #eff6ff; color: var(--blue-accent);
+      border: 1px solid #bfdbfe; padding: 0.25rem 0.65rem; border-radius: 999px;
+    }
+
+    /* ── ARTICLES ── */
+    #articles { padding: 6rem 4rem; background: var(--white); }
+    .articles-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 3rem; }
+    .article-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 10px; padding: 1.85rem;
+      transition: all 0.25s; box-shadow: 0 1px 8px rgba(10,22,40,0.04);
+    }
+    .article-card:hover { border-color: var(--blue-accent); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(26,86,219,0.1); }
+    .article-tag {
+      font-size: 0.63rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--blue-accent);
+      background: #eff6ff; padding: 0.2rem 0.6rem; border-radius: 4px;
+      display: inline-block; margin-bottom: 0.9rem;
+    }
+    .article-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--navy); line-height: 1.35; margin-bottom: 0.75rem; }
+    .article-excerpt { font-size: 0.82rem; color: var(--text-mid); line-height: 1.72; font-weight: 300; }
+
+    /* ── WHY ── */
+    #why { display: grid; grid-template-columns: 1fr 1fr; }
+    .why-left { padding: 6rem 4rem; background: var(--white); }
+    .why-right { padding: 6rem 4rem; background: var(--light-gray); }
+    .why-list { list-style: none; margin-top: 2rem; }
+    .why-item { display: flex; gap: 1.1rem; padding: 1.25rem 0; border-bottom: 1px solid var(--border); }
+    .why-item:first-child { border-top: 1px solid var(--border); }
+    .why-icon {
+      width: 32px; height: 32px; background: var(--navy);
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 2px;
+    }
+    .why-icon svg { width: 14px; height: 14px; stroke: #fff; fill: none; stroke-width: 2.5; }
+    .why-item-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.2rem; }
+    .why-item-desc { font-size: 0.83rem; color: var(--text-mid); line-height: 1.65; font-weight: 300; }
+
+    /* ── CONTACT ── */
+    #contact { padding: 6rem 4rem; background: var(--navy); }
+    #contact .section-title { color: var(--white); }
+    #contact .section-sub { color: rgba(255,255,255,0.5); }
+    #contact .section-label { color: var(--blue-bright); }
+    .contact-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 5rem; margin-top: 3rem; }
+    .google-form-wrap {
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px; overflow: hidden; padding: 0.75rem;
+    }
+    .google-form-wrap iframe { display: block; border-radius: 8px; }
+    .contact-info { display: flex; flex-direction: column; gap: 1.75rem; }
+    .contact-block-title { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 700; color: var(--white); margin-bottom: 0.3rem; }
+    .contact-block-val { font-size: 0.86rem; color: rgba(255,255,255,0.5); line-height: 1.65; font-weight: 300; }
+    .contact-block-val a { color: var(--blue-bright); text-decoration: none; }
+    .contact-block-val a:hover { text-decoration: underline; }
+    .contact-sep { height: 1px; background: rgba(255,255,255,0.08); }
+
+    /* ── LEGAL PAGES ── */
+    .legal-section { padding: 4.5rem 4rem; }
+    .legal-odd { background: var(--off-white); }
+    .legal-even { background: var(--white); }
+    .legal-body { font-size: 0.87rem; line-height: 1.85; color: var(--text-mid); font-weight: 300; max-width: 780px; margin-top: 1.5rem; }
+    .legal-body h3 { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--navy); margin: 1.5rem 0 0.4rem; }
+    .legal-body p { margin-bottom: 0.75rem; }
+    .legal-body a { color: var(--blue-accent); text-decoration: none; }
+
+    /* ── FOOTER ── */
+    footer { background: var(--navy); color: rgba(255,255,255,0.35); }
+    .footer-top {
+      display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 3rem; padding: 4rem 4rem 3rem;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .footer-brand-name { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--white); margin-bottom: 0.2rem; }
+    .footer-brand-name span { color: var(--blue-bright); }
+    .footer-brand-sub { font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.28); margin-bottom: 1rem; }
+    .footer-brand-desc { font-size: 0.8rem; line-height: 1.7; color: rgba(255,255,255,0.3); font-weight: 300; }
+    .footer-col-title { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--blue-bright); margin-bottom: 1.1rem; font-weight: 600; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-col a { font-size: 0.78rem; color: rgba(255,255,255,0.3); text-decoration: none; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--blue-bright); }
+    .footer-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.5rem 4rem; font-size: 0.72rem; gap: 2rem;
+    }
+    .footer-bci { font-size: 0.67rem; color: rgba(255,255,255,0.2); max-width: 480px; line-height: 1.5; text-align: center; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      nav { padding: 0 1.5rem; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-left { padding: 4rem 1.5rem 2.5rem; }
+      .hero-right { padding: 3rem 1.5rem; min-height: 380px; }
+      #services, #advocates, #articles, #contact, .why-left, .why-right { padding: 3.5rem 1.5rem; }
+      .services-grid, .articles-grid { grid-template-columns: 1fr; }
+      .advocate-grid { grid-template-columns: 1fr; }
+      #why { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .legal-section { padding: 3rem 1.5rem; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; padding: 2.5rem 1.5rem; }
+      .footer-bottom { flex-direction: column; gap: 0.75rem; text-align: center; padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- BCI BAR -->
+<div class="bci-bar">
+  As per Bar Council of India Rules, this website is for informational purposes only and does not constitute solicitation or advertisement of legal services. | <a href="#disclaimer">Read Disclaimer</a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-mark">
+      <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+    </div>
+    <div class="nav-logo-text">
+      <div class="nav-logo-name">The Jurists</div>
+      <div class="nav-logo-sub">Law Practice · Telangana</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#jurisdictions">Jurisdictions</a></li>
+    <li><a href="#services">Practice Areas</a></li>
+    <li><a href="#advocates">Advocates</a></li>
+    <li><a href="#articles">Legal Resources</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#contact" class="nav-cta">Connect Now</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-badge"><span></span> Telangana · District Courts &amp; High Court</div>
+    <h1 class="hero-title">Law Practice for Litigation &amp; Legal <em>Advisory</em> in Telangana</h1>
+    <p class="hero-body">The Jurists is a law practice appearing before District Courts and the High Court of Telangana. We handle civil, criminal, property, family, corporate, and consumer matters with careful preparation and diligent representation.</p>
+    <div class="hero-contact-strip">
+      <div class="hcs-item">
+        <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span>High Court of Telangana at Hyderabad</span>
+      </div>
+      <div class="hcs-item">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <a href="mailto:thejuristshyd@gmail.com">thejuristshyd@gmail.com</a>
+      </div>
+    </div>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Connect Now</a>
+      <a href="#services" class="btn-secondary">Practice Areas →</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-panel">
+      <div class="hero-panel-card">
+        <div class="panel-label">Founding Principle</div>
+        <div class="panel-quote">"Fiat justitia ruat caelum — Let justice be done though the heavens fall."</div>
+        <div class="panel-attr">The Jurists · Hyderabad, Telangana</div>
+      </div>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-num">500+</div>
+          <div class="stat-label">Matters</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">10+</div>
+          <div class="stat-label">Years</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">8+</div>
+          <div class="stat-label">Areas</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JURISDICTIONS -->
+<section id="jurisdictions" style="background:var(--light-gray);padding:3.5rem 4rem;border-bottom:1px solid var(--border);">
+  <p class="section-label" style="text-align:center;margin-bottom:0.5rem;">Courts &amp; Jurisdictions</p>
+  <h2 class="section-title" style="text-align:center;font-size:1.7rem;margin-bottom:0.5rem;">Where We Practise</h2>
+  <div class="divider" style="margin:1rem auto 2rem;"></div>
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:1.25rem;max-width:1100px;margin:0 auto;">
+
+    <div style="background:var(--white);border:1px solid var(--border);border-radius:10px;padding:1.75rem 1.25rem;text-align:center;box-shadow:0 2px 10px rgba(10,22,40,0.05);transition:box-shadow 0.25s,transform 0.25s;" onmouseover="this.style.boxShadow='0 8px 24px rgba(10,22,40,0.1)';this.style.transform='translateY(-3px)'" onmouseout="this.style.boxShadow='0 2px 10px rgba(10,22,40,0.05)';this.style.transform='translateY(0)'">
+      <div style="width:44px;height:44px;background:#eff6ff;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;">
+        <svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:var(--blue-accent);fill:none;stroke-width:1.8;"><polygon points="3 11 12 2 21 11"/><path d="M5 11v8a1 1 0 0 0 1 1h4v-5h4v5h4a1 1 0 0 0 1-1v-8"/></svg>
+      </div>
+      <div style="font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;color:var(--navy);margin-bottom:0.4rem;">High Court of Telangana</div>
+      <div style="font-size:0.73rem;color:var(--text-light);line-height:1.5;">Civil · Criminal · Writ · Appellate</div>
+    </div>
+
+    <div style="background:var(--white);border:1px solid var(--border);border-radius:10px;padding:1.75rem 1.25rem;text-align:center;box-shadow:0 2px 10px rgba(10,22,40,0.05);transition:box-shadow 0.25s,transform 0.25s;" onmouseover="this.style.boxShadow='0 8px 24px rgba(10,22,40,0.1)';this.style.transform='translateY(-3px)'" onmouseout="this.style.boxShadow='0 2px 10px rgba(10,22,40,0.05)';this.style.transform='translateY(0)'">
+      <div style="width:44px;height:44px;background:#eff6ff;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;">
+        <svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:var(--blue-accent);fill:none;stroke-width:1.8;"><circle cx="12" cy="10" r="3"/><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+      </div>
+      <div style="font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;color:var(--navy);margin-bottom:0.4rem;">Hyderabad</div>
+      <div style="font-size:0.73rem;color:var(--text-light);line-height:1.5;">District · Sessions · Civil · Family Courts</div>
+    </div>
+
+    <div style="background:var(--white);border:1px solid var(--border);border-radius:10px;padding:1.75rem 1.25rem;text-align:center;box-shadow:0 2px 10px rgba(10,22,40,0.05);transition:box-shadow 0.25s,transform 0.25s;" onmouseover="this.style.boxShadow='0 8px 24px rgba(10,22,40,0.1)';this.style.transform='translateY(-3px)'" onmouseout="this.style.boxShadow='0 2px 10px rgba(10,22,40,0.05)';this.style.transform='translateY(0)'">
+      <div style="width:44px;height:44px;background:#eff6ff;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;">
+        <svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:var(--blue-accent);fill:none;stroke-width:1.8;"><circle cx="12" cy="10" r="3"/><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+      </div>
+      <div style="font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;color:var(--navy);margin-bottom:0.4rem;">Secunderabad</div>
+      <div style="font-size:0.73rem;color:var(--text-light);line-height:1.5;">Civil &amp; Criminal Courts</div>
+    </div>
+
+    <div style="background:var(--white);border:1px solid var(--border);border-radius:10px;padding:1.75rem 1.25rem;text-align:center;box-shadow:0 2px 10px rgba(10,22,40,0.05);transition:box-shadow 0.25s,transform 0.25s;" onmouseover="this.style.boxShadow='0 8px 24px rgba(10,22,40,0.1)';this.style.transform='translateY(-3px)'" onmouseout="this.style.boxShadow='0 2px 10px rgba(10,22,40,0.05)';this.style.transform='translateY(0)'">
+      <div style="width:44px;height:44px;background:#eff6ff;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;">
+        <svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:var(--blue-accent);fill:none;stroke-width:1.8;"><circle cx="12" cy="10" r="3"/><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+      </div>
+      <div style="font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;color:var(--navy);margin-bottom:0.4rem;">Rangareddy</div>
+      <div style="font-size:0.73rem;color:var(--text-light);line-height:1.5;">District · Sessions · Property Courts</div>
+    </div>
+
+    <div style="background:var(--white);border:1px solid var(--border);border-radius:10px;padding:1.75rem 1.25rem;text-align:center;box-shadow:0 2px 10px rgba(10,22,40,0.05);transition:box-shadow 0.25s,transform 0.25s;" onmouseover="this.style.boxShadow='0 8px 24px rgba(10,22,40,0.1)';this.style.transform='translateY(-3px)'" onmouseout="this.style.boxShadow='0 2px 10px rgba(10,22,40,0.05)';this.style.transform='translateY(0)'">
+      <div style="width:44px;height:44px;background:#eff6ff;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;">
+        <svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:var(--blue-accent);fill:none;stroke-width:1.8;"><circle cx="12" cy="10" r="3"/><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+      </div>
+      <div style="font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;color:var(--navy);margin-bottom:0.4rem;">Medchal Malkajgiri &amp; Kukatpally</div>
+      <div style="font-size:0.73rem;color:var(--text-light);line-height:1.5;">Civil &amp; Criminal Courts</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PRACTICE AREAS -->
+<section id="services">
+  <p class="section-label">What We Handle</p>
+  <h2 class="section-title">Practice Areas</h2>
+  <div class="divider" style="background:var(--blue-bright)"></div>
+  <p class="section-sub" style="color:rgba(255,255,255,0.5)">The Jurists handles the following categories of legal matters before courts and tribunals in Telangana.</p>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+      <div class="service-num">01</div>
+      <div class="service-name">Civil Litigation</div>
+      <p class="service-desc">Representation in civil disputes including contract enforcement, injunctions, recovery suits, and declaratory matters before District Courts and the High Court of Telangana.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+      <div class="service-num">02</div>
+      <div class="service-name">Criminal Matters</div>
+      <p class="service-desc">Representation in criminal proceedings including bail applications, trials, and appeals from Magistrate Courts through to the High Court of Telangana.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
+      <div class="service-num">03</div>
+      <div class="service-name">Property &amp; Real Estate</div>
+      <p class="service-desc">Title disputes, partition suits, property registration issues, RERA complaints, and landlord-tenant matters before relevant courts and tribunals in Telangana.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+      <div class="service-num">04</div>
+      <div class="service-name">Family &amp; Matrimonial</div>
+      <p class="service-desc">Matrimonial disputes, divorce proceedings, child custody, maintenance, and inheritance matters before Family Courts and District Courts in Telangana.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
+      <div class="service-num">05</div>
+      <div class="service-name">Corporate &amp; Commercial</div>
+      <p class="service-desc">Legal advisory for businesses on contracts, compliance, commercial disputes, and corporate matters, including representation before commercial courts and tribunals.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
+      <div class="service-num">06</div>
+      <div class="service-name">Consumer Disputes</div>
+      <p class="service-desc">Representation before District Consumer Disputes Redressal Commissions and the State Consumer Commission in Telangana for consumer grievances.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M20 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
+      <div class="service-num">07</div>
+      <div class="service-name">Labour &amp; Employment</div>
+      <p class="service-desc">Representation before Labour Courts, Industrial Tribunals, and the High Court of Telangana in employment disputes, wrongful termination, and statutory compliance.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
+      <div class="service-num">08</div>
+      <div class="service-name">Cheque Bounce (NI Act)</div>
+      <p class="service-desc">Handling of dishonoured cheque matters under Section 138 of the Negotiable Instruments Act, including trial representation and appeal before competent courts.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+      <div class="service-num">09</div>
+      <div class="service-name">Writ Petitions</div>
+      <p class="service-desc">Filing and arguing writ petitions before the High Court of Telangana in matters concerning fundamental rights, government actions, and statutory authorities.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ADVOCATES -->
+<section id="advocates">
+  <p class="section-label">The Practice</p>
+  <h2 class="section-title">Advocate Profiles</h2>
+  <div class="divider"></div>
+  <p class="section-sub">Advocates enrolled with the Bar Council of Telangana and Andhra Pradesh, practising before courts in Telangana.</p>
+  <div class="advocate-grid">
+    <div class="advocate-card">
+      <div class="advocate-avatar"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+      <div class="advocate-name">Senior Advocate</div>
+      <div class="advocate-enroll">Bar Council of Telangana &amp; AP · Details available on request</div>
+      <div class="advocate-courts"><strong style="color:var(--navy);font-size:0.78rem;">Courts of Practice:</strong><br/>District Courts, Hyderabad · High Court of Telangana · Civil Courts, Ranga Reddy · Consumer Commissions, Telangana</div>
+      <div class="advocate-areas">
+        <span class="area-tag">Civil Litigation</span>
+        <span class="area-tag">Property Disputes</span>
+        <span class="area-tag">Corporate Advisory</span>
+        <span class="area-tag">Writ Petitions</span>
+      </div>
+    </div>
+    <div class="advocate-card">
+      <div class="advocate-avatar"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+      <div class="advocate-name">Associate Advocate</div>
+      <div class="advocate-enroll">Bar Council of Telangana &amp; AP · Details available on request</div>
+      <div class="advocate-courts"><strong style="color:var(--navy);font-size:0.78rem;">Courts of Practice:</strong><br/>Criminal Courts, Hyderabad · Family Courts, Hyderabad · High Court of Telangana · Labour Courts, Telangana</div>
+      <div class="advocate-areas">
+        <span class="area-tag">Criminal Defence</span>
+        <span class="area-tag">Family Law</span>
+        <span class="area-tag">Labour Matters</span>
+        <span class="area-tag">NI Act Cases</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEGAL RESOURCES -->
+<section id="articles" style="background:var(--off-white)">
+  <p class="section-label">Legal Resources</p>
+  <h2 class="section-title">Informational Legal Articles</h2>
+  <div class="divider"></div>
+  <p class="section-sub">Educational articles on common legal matters in India. For informational purposes only — not legal advice.</p>
+  <div class="articles-grid">
+    <div class="article-card">
+      <div class="article-tag">Civil Law</div>
+      <div class="article-title">Understanding Civil Litigation in India</div>
+      <p class="article-excerpt">Civil litigation refers to legal disputes between parties seeking monetary compensation or specific remedies. Governed by the Code of Civil Procedure, 1908, a civil suit begins with filing a plaint, followed by summons, written statement, framing of issues, evidence, arguments, and judgment. Interim applications for injunctions or stays may be filed at various stages.</p>
+    </div>
+    <div class="article-card">
+      <div class="article-tag">Consumer Law</div>
+      <div class="article-title">How to File a Consumer Complaint in Telangana</div>
+      <p class="article-excerpt">Under the Consumer Protection Act, 2019, complaints for claims up to ₹50 lakhs are filed before the District Consumer Disputes Redressal Commission. Claims between ₹50 lakhs and ₹2 crore go to the State Commission. A written complaint with supporting documents and proof of purchase is required. Legal representation is not mandatory but may assist.</p>
+    </div>
+    <div class="article-card">
+      <div class="article-tag">NI Act</div>
+      <div class="article-title">What Happens in a Cheque Bounce Case</div>
+      <p class="article-excerpt">A dishonoured cheque attracts liability under Section 138 of the Negotiable Instruments Act, 1881. A demand notice must be sent within 30 days of the cheque return memo. If payment isn't made within 15 days, a complaint may be filed before the Magistrate. Conviction may result in imprisonment up to two years or a fine up to twice the cheque amount.</p>
+    </div>
+    <div class="article-card">
+      <div class="article-tag">Property Law</div>
+      <div class="article-title">Property Disputes & Title Verification in Telangana</div>
+      <p class="article-excerpt">Property disputes commonly arise from unclear title chains, fraudulent transfers, and encroachments. Title verification involves examining sale deeds, encumbrance certificates, patta records, and mutation entries. RERA Telangana regulates disputes relating to registered real estate projects. Proceedings are filed before Civil Courts or the High Court depending on valuation.</p>
+    </div>
+    <div class="article-card">
+      <div class="article-tag">Family Law</div>
+      <div class="article-title">Overview of Matrimonial Proceedings in India</div>
+      <p class="article-excerpt">Matrimonial disputes are governed by personal laws including the Hindu Marriage Act, 1955 and Special Marriage Act, 1954. Family Courts under the Family Courts Act, 1984 handle divorce, maintenance, and custody proceedings. Courts must explore reconciliation before proceeding with divorce. Child custody is decided on the basis of the best interests of the child.</p>
+    </div>
+    <div class="article-card">
+      <div class="article-tag">Constitutional Law</div>
+      <div class="article-title">When Can You File a Writ Petition in the High Court?</div>
+      <p class="article-excerpt">Writ petitions are filed before the High Court under Article 226 of the Constitution to enforce fundamental rights or challenge unlawful actions of state authorities. The five writs — habeas corpus, mandamus, prohibition, certiorari, and quo warranto — apply in specific situations. The High Court of Telangana exercises jurisdiction over all matters arising within Telangana.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<div id="why">
+  <div class="why-left">
+    <p class="section-label">About the Practice</p>
+    <h2 class="section-title">Approach to Legal Practice</h2>
+    <div class="divider"></div>
+    <p class="section-sub">The Jurists approaches each matter with careful legal analysis, thorough preparation, and diligent representation before courts in Telangana.</p>
+    <ul class="why-list">
+      <li class="why-item"><div class="why-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div><div class="why-item-title">Thorough Court Preparation</div><p class="why-item-desc">Each matter is prepared with careful review of facts, applicable law, and procedural requirements before the relevant court.</p></div></li>
+      <li class="why-item"><div class="why-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div><div class="why-item-title">Transparent Communication</div><p class="why-item-desc">Clients are kept informed of procedural developments and the legal position at each stage of their matter.</p></div></li>
+      <li class="why-item"><div class="why-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div><div class="why-item-title">Telangana-Focused Practice</div><p class="why-item-desc">Practice is focused on courts in Telangana, with familiarity with local procedures, rules, and judicial practices.</p></div></li>
+      <li class="why-item"><div class="why-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div><div class="why-item-title">Ethical Conduct</div><p class="why-item-desc">All matters are handled in accordance with the Rules of Professional Conduct prescribed by the Bar Council of India.</p></div></li>
+    </ul>
+  </div>
+  <div class="why-right">
+    <p class="section-label">Jurisdiction</p>
+    <h2 class="section-title">Courts Where We Appear</h2>
+    <div class="divider"></div>
+    <p class="section-sub">The practice regularly appears before the following courts and tribunals across Telangana.</p>
+    <ul class="why-list" style="margin-top:1.5rem">
+      <li class="why-item"><div class="why-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div><div class="why-item-title">High Court of Telangana</div><p class="why-item-desc">Civil, criminal, writ, and appellate matters before the High Court of Telangana at Hyderabad.</p></div></li>
+      <li class="why-item"><div class="why-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div><div class="why-item-title">District Courts, Hyderabad</div><p class="why-item-desc">Civil, criminal, and sessions matters before District Courts in Hyderabad city.</p></div></li>
+      <li class="why-item"><div class="why-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div><div class="why-item-title">District Courts, Secunderabad</div><p class="why-item-desc">Matters before civil and criminal courts covering Secunderabad and surrounding areas.</p></div></li>
+      <li class="why-item"><div class="why-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div><div class="why-item-title">District Courts, Rangareddy</div><p class="why-item-desc">Civil, property, and criminal matters before District and Sessions Courts in Rangareddy.</p></div></li>
+      <li class="why-item"><div class="why-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div><div class="why-item-title">Courts, Medchal Malkajgiri &amp; Kukatpally</div><p class="why-item-desc">Civil and criminal matters before courts in Medchal Malkajgiri district including Kukatpally jurisdiction.</p></div></li>
+      <li class="why-item"><div class="why-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div><div class="why-item-title">Family Courts, Hyderabad</div><p class="why-item-desc">Matrimonial disputes, maintenance, and child custody before Family Courts in Hyderabad.</p></div></li>
+      <li class="why-item"><div class="why-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div><div class="why-item-title">Consumer Commissions &amp; Tribunals</div><p class="why-item-desc">Consumer disputes before DCDRC Hyderabad, Labour Courts, and statutory tribunals in Telangana.</p></div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-label">Get in Touch</p>
+  <h2 class="section-title">Connect Now</h2>
+  <div class="divider" style="background:var(--blue-bright)"></div>
+  <p class="section-sub">Fill in the form to get in touch. All communications are confidential. Submitting this form does not create an advocate-client relationship.</p>
+  <div class="contact-grid">
+    <div class="google-form-wrap">
+      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfnE0BAhL1NXYeQFf26L9N98p78JlDIB6XD1NGzQvoI9Oa6UA/viewform?embedded=true" width="100%" height="820" frameborder="0" marginheight="0" marginwidth="0" style="display:block;border:none;">Loading…</iframe>
+    </div>
+    <div class="contact-info">
+      <div>
+        <div class="contact-block-title">Office Address</div>
+        <div class="contact-block-val">The Jurists<br/>High Court of Telangana at Hyderabad<br/>Hyderabad, Telangana, India</div>
+      </div>
+      <div class="contact-sep"></div>
+      <div>
+        <div class="contact-block-title">Email</div>
+        <div class="contact-block-val"><a href="mailto:thejuristshyd@gmail.com">thejuristshyd@gmail.com</a></div>
+      </div>
+      <div class="contact-sep"></div>
+      <div>
+        <div class="contact-block-title">Office Hours</div>
+        <div class="contact-block-val">Monday – Saturday<br/>10:00 AM – 6:00 PM IST<br/>Sunday &amp; Public Holidays: Closed</div>
+      </div>
+      <div class="contact-sep"></div>
+      <div>
+        <div class="contact-block-title">Bar Council Registration</div>
+        <div class="contact-block-val">Advocates enrolled with the Bar Council of Telangana and Andhra Pradesh under the Advocates Act, 1961.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DISCLAIMER -->
+<div class="legal-section legal-odd" id="disclaimer">
+  <p class="section-label">Legal</p>
+  <h2 class="section-title">Disclaimer</h2>
+  <div class="divider"></div>
+  <div class="legal-body">
+    <p><strong>Bar Council of India Compliance Notice</strong></p>
+    <p>As per the rules of the Bar Council of India, advocates are not permitted to solicit work or advertise, either directly or indirectly. This website has been created solely to provide general legal information and to establish an informational online presence for the practice.</p>
+    <h3>No Solicitation</h3>
+    <p>This website and its contents do not constitute solicitation or advertisement of legal services in any form. No part of this website should be construed as an invitation to instruct or retain The Jurists or any advocate associated with the practice.</p>
+    <h3>No Lawyer-Client Relationship</h3>
+    <p>Accessing this website, reading its content, or submitting an enquiry does not create an advocate-client relationship. Such a relationship is formed only upon execution of a formal engagement letter signed by both parties.</p>
+    <h3>Voluntary Access</h3>
+    <p>The user confirms they are voluntarily seeking information about the legal practice and that there has been no form of advertisement, inducement, or solicitation. Information is accessed at the user's own initiative and discretion.</p>
+    <h3>Informational Purpose Only</h3>
+    <p>All content on this website is provided for general informational and educational purposes only. It does not constitute legal advice and should not be relied upon as such. Readers should seek independent legal advice specific to their circumstances.</p>
+    <h3>No Guarantee of Outcomes</h3>
+    <p>Nothing on this website constitutes a guarantee or representation regarding the outcome of any legal matter. The outcome of proceedings depends on the specific facts, applicable law, and decisions of the court.</p>
+    <h3>Governing Jurisdiction</h3>
+    <p>This website is operated from Hyderabad, Telangana, India. Any disputes arising from its use shall be subject to the exclusive jurisdiction of courts in Hyderabad, Telangana.</p>
+  </div>
+</div>
+
+<!-- PRIVACY POLICY -->
+<div class="legal-section legal-even" id="privacy">
+  <p class="section-label">Legal</p>
+  <h2 class="section-title">Privacy Policy</h2>
+  <div class="divider"></div>
+  <div class="legal-body">
+    <p><strong>Last Updated: January 2025</strong></p>
+    <p>The Jurists is committed to protecting the privacy of individuals who access thejurists.in. This Privacy Policy describes how we collect, use, store, and protect your information.</p>
+    <h3>1. Information Collected</h3>
+    <p>We collect personal information you provide voluntarily through the contact form, including your name, email address, phone number, and description of your legal matter.</p>
+    <h3>2. Purpose of Collection</h3>
+    <p>Information is used solely to respond to your enquiry. We do not sell, rent, or disclose personal data to third parties except where required by law.</p>
+    <h3>3. Confidentiality</h3>
+    <p>Information shared in relation to a legal matter is treated as confidential and may attract legal professional privilege under Indian law, subject to a formal engagement being established.</p>
+    <h3>4. Data Retention</h3>
+    <p>Personal data is retained only for as long as necessary to respond to your enquiry, unless a longer period is required by law.</p>
+    <h3>5. Cookies</h3>
+    <p>This website may use standard browser cookies to improve user experience. You may disable cookies in your browser settings without affecting your ability to view website content.</p>
+    <h3>6. Security</h3>
+    <p>We implement reasonable technical measures to protect personal data against unauthorised access, loss, or misuse.</p>
+    <h3>7. Your Rights</h3>
+    <p>You may request access to, correction of, or deletion of your personal data by contacting <a href="mailto:thejuristshyd@gmail.com">thejuristshyd@gmail.com</a>.</p>
+  </div>
+</div>
+
+<!-- TERMS & CONDITIONS -->
+<div class="legal-section legal-odd" id="terms">
+  <p class="section-label">Legal</p>
+  <h2 class="section-title">Terms &amp; Conditions</h2>
+  <div class="divider"></div>
+  <div class="legal-body">
+    <p><strong>Last Updated: January 2025</strong></p>
+    <p>By accessing and using thejurists.in, you agree to be bound by the following terms. If you do not agree, please do not use this website.</p>
+    <h3>1. Use of Website</h3>
+    <p>This website is provided for informational purposes only. You may not use it for any unlawful purpose or in a manner that could damage or impair its functionality.</p>
+    <h3>2. Intellectual Property</h3>
+    <p>All content on this website is the property of The Jurists and may not be reproduced or distributed without prior written permission.</p>
+    <h3>3. No Legal Advice</h3>
+    <p>Content on this website does not constitute legal advice. The Jurists does not accept responsibility for any action taken based on information on this website. Always seek qualified legal advice specific to your situation.</p>
+    <h3>4. Limitation of Liability</h3>
+    <p>To the extent permitted by law, The Jurists shall not be liable for any direct, indirect, or consequential loss arising from use of this website.</p>
+    <h3>5. Governing Law</h3>
+    <p>These terms are governed by the laws of India. Any disputes shall be subject to the exclusive jurisdiction of courts in Hyderabad, Telangana.</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand-name">The <span>Jurists</span></div>
+      <div class="footer-brand-sub">Law Practice · Telangana</div>
+      <div class="footer-brand-desc">A law practice handling litigation and legal advisory matters before District Courts and the High Court of Telangana. Enrolled advocates of the Bar Council of Telangana and Andhra Pradesh.</div>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Practice Areas</div>
+      <ul>
+        <li><a href="#services">Civil Litigation</a></li>
+        <li><a href="#services">Criminal Matters</a></li>
+        <li><a href="#services">Property Disputes</a></li>
+        <li><a href="#services">Family Law</a></li>
+        <li><a href="#services">Consumer Disputes</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Information</div>
+      <ul>
+        <li><a href="#advocates">Advocate Profiles</a></li>
+        <li><a href="#articles">Legal Resources</a></li>
+        <li><a href="#why">About the Practice</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Legal Pages</div>
+      <ul>
+        <li><a href="#disclaimer">Disclaimer</a></li>
+        <li><a href="#privacy">Privacy Policy</a></li>
+        <li><a href="#terms">Terms &amp; Conditions</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot

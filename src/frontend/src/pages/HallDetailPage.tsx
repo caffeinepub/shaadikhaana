@@ -422,11 +422,11 @@ export default function HallDetailPage() {
               </div>
 
               {hall.pricePerDay === BigInt(0) ? (
-                <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-center">
-                  <p className="text-sm font-semibold text-amber-900 mb-1">
+                <div className="bg-amber-900/20 border border-amber-700/40 rounded-xl p-4 text-center">
+                  <p className="text-sm font-semibold text-amber-300 mb-1">
                     Price on Demand
                   </p>
-                  <p className="text-xs text-amber-700 leading-relaxed">
+                  <p className="text-xs text-amber-400 leading-relaxed">
                     Contact the venue using the details above to get a quote and
                     proceed with your booking.
                   </p>

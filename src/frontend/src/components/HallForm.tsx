@@ -276,11 +276,11 @@ export default function HallForm({ hall, onClose }: HallFormProps) {
                   <div>
                     <label
                       htmlFor="price-on-demand"
-                      className="font-medium text-sm cursor-pointer text-amber-900"
+                      className="font-medium text-sm cursor-pointer text-amber-300"
                     >
                       Price on Demand
                     </label>
-                    <p className="text-xs text-amber-700 mt-0.5 leading-snug">
+                    <p className="text-xs text-amber-400 mt-0.5 leading-snug">
                       Customers will see "Contact for Price" instead of a fixed
                       price. Your actual pricing is only used for our internal
                       2.5% booking charge calculation — it will NOT be shown on

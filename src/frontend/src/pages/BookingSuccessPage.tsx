@@ -98,7 +98,7 @@ export default function BookingSuccessPage() {
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ type: "spring", delay: 0.2 }}
-                className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto"
+                className="w-20 h-20 bg-green-900/30 rounded-full flex items-center justify-center mx-auto shadow-gold-sm"
               >
                 <CheckCircle2 className="w-10 h-10 text-green-600" />
               </motion.div>
@@ -109,15 +109,15 @@ export default function BookingSuccessPage() {
                 Your venue has been successfully booked. You'll receive a
                 confirmation shortly. Check your dashboard for booking details.
               </p>
-              <div className="bg-green-50 border border-green-200 rounded-xl p-3 text-sm text-green-800">
+              <div className="bg-green-900/30 border border-green-700/40 rounded-xl p-3 text-sm text-green-300">
                 <p className="font-semibold mb-1">What's Next?</p>
-                <ul className="text-xs space-y-1.5 text-green-700">
+                <ul className="text-xs space-y-1.5 text-green-400">
                   <li>
                     ✓ Your booking charge (2.5%) has been paid to ShaadiKhaana
                   </li>
                   <li>✓ The date is now locked and reserved for you</li>
                   <li>✓ The hall owner has been notified of your booking</li>
-                  <li className="font-semibold text-green-800">
+                  <li className="font-semibold text-green-300">
                     💰 Pay the remaining balance directly to the hall owner
                     before the event
                   </li>

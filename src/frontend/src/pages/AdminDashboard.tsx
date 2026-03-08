@@ -175,15 +175,15 @@ export default function AdminDashboard() {
                 ? Number(stats.totalBookings).toString()
                 : bookings.length.toString(),
               icon: Calendar,
-              color: "text-blue-600",
-              bg: "bg-blue-50",
+              color: "text-blue-400",
+              bg: "bg-blue-900/30",
             },
             {
               label: "Total Users",
               value: stats ? Number(stats.totalUsers).toString() : "—",
               icon: Users,
-              color: "text-purple-600",
-              bg: "bg-purple-50",
+              color: "text-purple-400",
+              bg: "bg-purple-900/30",
             },
             {
               label: "Total Revenue",
@@ -193,8 +193,8 @@ export default function AdminDashboard() {
                     bookings.reduce((s, b) => s + b.platformFee, BigInt(0)),
                   ),
               icon: TrendingUp,
-              color: "text-green-600",
-              bg: "bg-green-50",
+              color: "text-green-400",
+              bg: "bg-green-900/30",
             },
           ].map((stat) => (
             <motion.div
@@ -379,7 +379,7 @@ export default function AdminDashboard() {
                           </TableCell>
                           <TableCell>
                             <Badge
-                              className={`text-xs ${hall.isActive ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-600"}`}
+                              className={`text-xs ${hall.isActive ? "bg-green-900/40 text-green-300" : "bg-muted text-muted-foreground"}`}
                             >
                               {hall.isActive ? "Active" : "Inactive"}
                             </Badge>
@@ -414,17 +414,17 @@ export default function AdminDashboard() {
                 </div>
 
                 {/* Info box */}
-                <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm text-amber-900 space-y-1">
+                <div className="bg-amber-900/20 border border-amber-700/40 rounded-xl p-4 text-sm text-amber-300 space-y-1">
                   <p className="font-semibold">Where to find your Key ID</p>
-                  <p className="text-xs text-amber-800 leading-relaxed">
+                  <p className="text-xs text-amber-400 leading-relaxed">
                     Log in to your{" "}
                     <span className="font-medium">Razorpay Dashboard</span> →
                     Settings → API Keys. Your Key ID starts with{" "}
-                    <code className="bg-amber-100 px-1 rounded font-mono text-xs">
+                    <code className="bg-amber-900/30 px-1 rounded font-mono text-xs">
                       rzp_live_
                     </code>{" "}
                     (production) or{" "}
-                    <code className="bg-amber-100 px-1 rounded font-mono text-xs">
+                    <code className="bg-amber-900/30 px-1 rounded font-mono text-xs">
                       rzp_test_
                     </code>{" "}
                     (test mode).

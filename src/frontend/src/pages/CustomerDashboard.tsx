@@ -185,15 +185,15 @@ function CancelDialog({
           </DialogTitle>
         </DialogHeader>
         <div className="space-y-4 py-2">
-          <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
-            <p className="font-semibold text-sm text-amber-900 mb-2">
+          <div className="bg-amber-900/20 border border-amber-700/40 rounded-xl p-4">
+            <p className="font-semibold text-sm text-amber-300 mb-2">
               Refund Policy
             </p>
-            <p className="text-sm text-amber-800">{policy}</p>
+            <p className="text-sm text-amber-400">{policy}</p>
             <Separator className="my-2" />
             <div className="flex justify-between text-sm">
-              <span className="text-amber-700">Refund Amount:</span>
-              <span className="font-bold text-amber-900">
+              <span className="text-amber-400">Refund Amount:</span>
+              <span className="font-bold text-amber-300">
                 {formatPrice(refundAmount)}
                 {refundPercent > 0 && (
                   <span className="text-xs ml-1">
@@ -202,7 +202,7 @@ function CancelDialog({
                 )}
               </span>
             </div>
-            <p className="text-xs text-amber-600 mt-1">
+            <p className="text-xs text-amber-500 mt-1">
               * Service fee is non-refundable
             </p>
           </div>
@@ -378,16 +378,16 @@ function BookingCard({
 
                 {booking.status === BookingStatus.cancelled &&
                   booking.refundAmount !== undefined && (
-                    <div className="bg-red-50 border border-red-100 rounded-lg p-3 text-sm">
-                      <p className="text-red-700 font-medium">
+                    <div className="bg-red-900/20 border border-red-700/40 rounded-lg p-3 text-sm">
+                      <p className="text-red-400 font-medium">
                         Booking Cancelled
                       </p>
                       {booking.cancellationReason && (
-                        <p className="text-xs text-red-600 mt-0.5">
+                        <p className="text-xs text-red-400 mt-0.5">
                           Reason: {booking.cancellationReason}
                         </p>
                       )}
-                      <p className="text-xs text-red-600 mt-0.5">
+                      <p className="text-xs text-red-400 mt-0.5">
                         Refund: {formatPrice(booking.refundAmount!)} processed
                       </p>
                     </div>
@@ -410,7 +410,7 @@ function BookingCard({
                     hasReviewed && (
                       <Badge
                         variant="outline"
-                        className="text-green-700 border-green-200"
+                        className="text-green-400 border-green-700/40"
                       >
                         <CheckCircle2 className="w-3 h-3 mr-1" />
                         Reviewed

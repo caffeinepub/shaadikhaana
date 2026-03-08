@@ -229,7 +229,7 @@ export default function TermsPage() {
                               {refundTable.map((row, ri) => (
                                 <tr
                                   key={row.timing}
-                                  className={`border-b border-border last:border-0 ${ri === 0 ? "bg-green-50/50" : ri === 1 ? "bg-yellow-50/50" : "bg-red-50/50"}`}
+                                  className={`border-b border-border last:border-0 ${ri === 0 ? "bg-green-900/20" : ri === 1 ? "bg-yellow-900/20" : "bg-red-900/20"}`}
                                 >
                                   <td className="text-sm font-medium text-foreground p-3">
                                     {row.timing}
@@ -237,15 +237,15 @@ export default function TermsPage() {
                                   <td
                                     className={`text-sm font-semibold p-3 ${
                                       ri === 0
-                                        ? "text-green-700"
+                                        ? "text-green-400"
                                         : ri === 1
-                                          ? "text-amber-700"
-                                          : "text-red-700"
+                                          ? "text-amber-400"
+                                          : "text-red-400"
                                     }`}
                                   >
                                     {row.refund}
                                   </td>
-                                  <td className="text-sm text-red-600 font-medium p-3">
+                                  <td className="text-sm text-red-400 font-medium p-3">
                                     {row.serviceFee}
                                   </td>
                                 </tr>

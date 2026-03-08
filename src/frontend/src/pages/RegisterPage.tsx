@@ -6,9 +6,11 @@ import { useNavigate } from "@tanstack/react-router";
 import {
   Building2,
   CheckCircle2,
+  Info,
   Loader2,
   Mail,
   Phone,
+  Shield,
   User,
 } from "lucide-react";
 import { motion } from "motion/react";
@@ -21,8 +23,9 @@ import {
   useGetUserRole,
   useSaveUserProfile,
 } from "../hooks/useQueries";
+import { getSecretParameter, storeSessionParameter } from "../utils/urlParams";
 
-type AccountType = "customer" | "owner";
+type AccountType = "customer" | "owner" | "admin";
 
 export default function RegisterPage() {
   const navigate = useNavigate();
@@ -31,10 +34,12 @@ export default function RegisterPage() {
   const { data: currentRole } = useGetUserRole();
   const saveProfile = useSaveUserProfile();
 
+  const hasAdminToken = !!getSecretParameter("caffeineAdminToken");
   const [accountType, setAccountType] = useState<AccountType>("customer");
   const [displayName, setDisplayName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [manualAdminToken, setManualAdminToken] = useState("");
   const [isSaving, setIsSaving] = useState(false);
   const [saved, setSaved] = useState(false);
 
@@ -45,11 +50,14 @@ export default function RegisterPage() {
       setEmail(existingProfile.email || "");
       setPhone(existingProfile.phone || "");
       // Determine account type from role
-      if (currentRole === UserRole.user) setAccountType("owner");
-      else if (currentRole === UserRole.admin) setAccountType("owner");
+      if (currentRole === UserRole.admin) setAccountType("admin");
+      else if (currentRole === UserRole.user) setAccountType("owner");
       else setAccountType("customer");
+    } else if (hasAdminToken) {
+      // New registration with admin token — pre-select admin
+      setAccountType("admin");
     }
-  }, [existingProfile, currentRole]);
+  }, [existingProfile, currentRole, hasAdminToken]);
 
   if (!identity) {
     return (
@@ -83,9 +91,32 @@ export default function RegisterPage() {
 
   const handleSave = async () => {
     if (!identity || !displayName.trim()) return;
+
+    // If admin is selected but token not yet in session, store it first
+    if (accountType === "admin" && !hasAdminToken) {
+      if (!manualAdminToken.trim()) {
+        toast.error("Please enter your Admin Token to register as admin.");
+        return;
+      }
+      // Store it in session so useActor can pick it up on next actor creation
+      storeSessionParameter("caffeineAdminToken", manualAdminToken.trim());
+      // Force a page reload so useActor reinitializes with the token
+      toast.info("Admin token saved. Reloading to apply...");
+      setTimeout(() => window.location.reload(), 1000);
+      return;
+    }
+
     setIsSaving(true);
     try {
-      const role = accountType === "owner" ? UserRole.user : UserRole.guest;
+      // Preserve admin role if already assigned by backend; never downgrade it
+      let role: UserRole;
+      if (accountType === "admin" || currentRole === UserRole.admin) {
+        role = UserRole.admin;
+      } else if (accountType === "owner") {
+        role = UserRole.user;
+      } else {
+        role = UserRole.guest;
+      }
 
       const profile = {
         principal: identity.getPrincipal(),
@@ -102,7 +133,9 @@ export default function RegisterPage() {
       toast.success("Profile saved successfully!");
 
       setTimeout(() => {
-        if (accountType === "owner") {
+        if (accountType === "admin" || currentRole === UserRole.admin) {
+          navigate({ to: "/admin" });
+        } else if (accountType === "owner") {
           navigate({ to: "/owner" });
         } else {
           navigate({ to: "/dashboard" });
@@ -155,8 +188,10 @@ export default function RegisterPage() {
               </Label>
               <RadioGroup
                 value={accountType}
-                onValueChange={(v) => setAccountType(v as AccountType)}
-                className="grid grid-cols-2 gap-3"
+                onValueChange={(v) => {
+                  setAccountType(v as AccountType);
+                }}
+                className="grid gap-3 grid-cols-3"
               >
                 <label
                   htmlFor="customer"
@@ -208,7 +243,95 @@ export default function RegisterPage() {
                     <p className="text-xs text-muted-foreground">Hall Owner</p>
                   </div>
                 </label>
+                <label
+                  htmlFor="admin"
+                  className={`relative flex flex-col items-center gap-2 p-4 rounded-xl border-2 cursor-pointer transition-all ${
+                    accountType === "admin"
+                      ? "border-amber-500 bg-amber-900/20"
+                      : "border-border hover:border-amber-400/60"
+                  }`}
+                >
+                  <RadioGroupItem
+                    value="admin"
+                    id="admin"
+                    className="sr-only"
+                  />
+                  <Shield
+                    className={`w-6 h-6 ${accountType === "admin" ? "text-amber-400" : "text-muted-foreground"}`}
+                  />
+                  <div className="text-center">
+                    <p
+                      className={`font-semibold text-sm ${accountType === "admin" ? "text-amber-400" : "text-foreground"}`}
+                    >
+                      Admin
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      Platform Admin
+                    </p>
+                  </div>
+                </label>
               </RadioGroup>
+
+              {/* Admin Token Input */}
+              {accountType === "admin" &&
+                !hasAdminToken &&
+                currentRole !== UserRole.admin && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    className="mt-4 space-y-3"
+                  >
+                    <div className="bg-amber-900/20 border border-amber-700/40 rounded-xl p-3 flex gap-2">
+                      <Info className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                      <div className="text-xs text-amber-300 space-y-1">
+                        <p className="font-semibold">
+                          Where to find your Admin Token
+                        </p>
+                        <p className="text-amber-400 leading-relaxed">
+                          Open your Caffeine project dashboard. Look for "Admin
+                          Token" in the project settings panel (usually shown at
+                          the top or in the sidebar). It's a long random string.
+                        </p>
+                      </div>
+                    </div>
+                    <div>
+                      <Label
+                        htmlFor="admin-token"
+                        className="mb-1.5 block text-sm"
+                      >
+                        Admin Token *
+                      </Label>
+                      <div className="relative">
+                        <Shield className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                        <Input
+                          id="admin-token"
+                          type="password"
+                          placeholder="Paste your admin token here"
+                          value={manualAdminToken}
+                          onChange={(e) => setManualAdminToken(e.target.value)}
+                          className="pl-9 font-mono text-sm"
+                          data-ocid="register.admin_token.input"
+                        />
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+
+              {/* Already admin notice */}
+              {(hasAdminToken || currentRole === UserRole.admin) &&
+                accountType === "admin" && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="mt-3 bg-green-900/20 border border-green-700/40 rounded-xl p-3 flex gap-2"
+                  >
+                    <CheckCircle2 className="w-4 h-4 text-green-400 shrink-0 mt-0.5" />
+                    <p className="text-xs text-green-300">
+                      Admin token verified. Fill in your details below and save
+                      to access the Admin Panel.
+                    </p>
+                  </motion.div>
+                )}
             </div>
 
             {/* Display Name */}
@@ -269,7 +392,7 @@ export default function RegisterPage() {
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="flex items-center gap-2 bg-green-50 border border-green-200 text-green-700 rounded-xl p-4"
+                className="flex items-center gap-2 bg-green-900/30 border border-green-700/40 text-green-300 rounded-xl p-4"
               >
                 <CheckCircle2 className="w-5 h-5" />
                 <p className="font-medium text-sm">

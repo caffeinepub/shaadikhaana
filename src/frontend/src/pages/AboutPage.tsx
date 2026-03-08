@@ -37,7 +37,7 @@ const values = [
 
 const stats = [
   { value: "10+", label: "Cities Covered" },
-  { value: "3.5%", label: "Booking Charge Only" },
+  { value: "2.5%", label: "Booking Charge Only" },
   { value: "100%", label: "Secure Payments" },
   { value: "Free", label: "To List Your Hall" },
 ];

@@ -31,73 +31,78 @@
 
 @layer base {
   :root {
-    --radius: 0.75rem;
+    --radius: 0.5rem;
 
-    /* ── Light mode palette ── */
-    /* Background: warm cream-ivory */
-    --background: 0.97 0.012 75;
-    --foreground: 0.18 0.028 30;
+    /* ── Royal Mughal Dark Palette ── */
+    /* Background: deep charcoal with warm undertone */
+    --background: 0.12 0.018 25;
+    --foreground: 0.95 0.015 80;
 
-    /* Cards: white with slight warmth */
-    --card: 1 0.005 80;
-    --card-foreground: 0.18 0.028 30;
+    /* Cards: slightly lighter warm dark */
+    --card: 0.16 0.022 25;
+    --card-foreground: 0.95 0.015 80;
 
-    --popover: 1 0.005 80;
-    --popover-foreground: 0.18 0.028 30;
+    --popover: 0.16 0.022 25;
+    --popover-foreground: 0.95 0.015 80;
 
     /* Primary: Deep burgundy/maroon */
-    --primary: 0.38 0.12 15;
-    --primary-foreground: 0.97 0.012 75;
+    --primary: 0.35 0.16 12;
+    --primary-foreground: 0.95 0.015 80;
 
-    /* Secondary: Warm sand */
-    --secondary: 0.92 0.025 70;
-    --secondary-foreground: 0.32 0.04 30;
+    /* Secondary: warm muted dark */
+    --secondary: 0.22 0.03 25;
+    --secondary-foreground: 0.88 0.018 75;
 
-    /* Muted: Soft cream */
-    --muted: 0.94 0.015 70;
-    --muted-foreground: 0.52 0.02 30;
+    /* Muted: dark warm */
+    --muted: 0.20 0.025 25;
+    --muted-foreground: 0.60 0.02 50;
 
-    /* Accent: Rich gold */
-    --accent: 0.75 0.14 65;
-    --accent-foreground: 0.18 0.028 30;
+    /* Accent: deep saffron-gold */
+    --accent: 0.72 0.165 68;
+    --accent-foreground: 0.15 0.02 25;
 
-    --destructive: 0.577 0.245 27.325;
-    --destructive-foreground: 0.985 0 0;
+    --destructive: 0.52 0.22 18;
+    --destructive-foreground: 0.95 0.015 80;
 
-    --border: 0.88 0.02 70;
-    --input: 0.88 0.02 70;
-    --ring: 0.38 0.12 15;
+    --border: 0.25 0.03 25;
+    --input: 0.25 0.03 25;
+    --ring: 0.72 0.165 68;
 
     /* Chart colors */
-    --chart-1: 0.38 0.12 15;
-    --chart-2: 0.75 0.14 65;
+    --chart-1: 0.35 0.16 12;
+    --chart-2: 0.72 0.165 68;
     --chart-3: 0.52 0.1 25;
     --chart-4: 0.65 0.12 50;
     --chart-5: 0.45 0.08 200;
 
     /* Gold accent color */
-    --gold: 0.75 0.14 65;
-    --gold-light: 0.88 0.1 75;
-    --gold-dark: 0.55 0.12 55;
+    --gold: 0.72 0.165 68;
+    --gold-light: 0.84 0.13 72;
+    --gold-dark: 0.52 0.14 60;
 
     /* Sidebar */
-    --sidebar: 0.22 0.04 20;
-    --sidebar-foreground: 0.92 0.015 70;
-    --sidebar-primary: 0.75 0.14 65;
-    --sidebar-primary-foreground: 0.18 0.028 30;
-    --sidebar-accent: 0.30 0.05 20;
-    --sidebar-accent-foreground: 0.92 0.015 70;
-    --sidebar-border: 0.30 0.05 20;
-    --sidebar-ring: 0.75 0.14 65;
+    --sidebar: 0.10 0.015 25;
+    --sidebar-foreground: 0.88 0.018 75;
+    --sidebar-primary: 0.72 0.165 68;
+    --sidebar-primary-foreground: 0.15 0.02 25;
+    --sidebar-accent: 0.18 0.025 25;
+    --sidebar-accent-foreground: 0.88 0.018 75;
+    --sidebar-border: 0.22 0.03 25;
+    --sidebar-ring: 0.72 0.165 68;
 
     /* Status colors */
-    --success: 0.55 0.15 145;
-    --warning: 0.72 0.14 65;
+    --success: 0.50 0.14 145;
+    --warning: 0.72 0.165 68;
     --info: 0.52 0.12 240;
   }
 
   * {
     @apply border-border;
+  }
+
+  html {
+    color-scheme: dark;
+    scroll-behavior: smooth;
   }
 
   body {
@@ -111,10 +116,6 @@
   h1, h2, h3 {
     font-family: "Playfair Display", Georgia, serif;
     font-feature-settings: "lnum";
-  }
-
-  html {
-    scroll-behavior: smooth;
   }
 }
 
@@ -131,13 +132,13 @@
     font-family: "Cabinet Grotesk", system-ui, sans-serif;
   }
 
-  /* Gold gradient text */
+  /* Gold gradient text — rich, warm, deep */
   .text-gold-gradient {
     background: linear-gradient(
       135deg,
-      oklch(0.65 0.16 65) 0%,
-      oklch(0.82 0.14 75) 50%,
-      oklch(0.62 0.14 55) 100%
+      oklch(0.62 0.18 65) 0%,
+      oklch(0.84 0.13 75) 50%,
+      oklch(0.58 0.16 58) 100%
     );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -150,32 +151,46 @@
     background-repeat: repeat;
   }
 
+  /* Hero overlay: deep dark burgundy-to-charcoal */
   .bg-hero-pattern {
     background: linear-gradient(
-      135deg,
-      oklch(0.22 0.05 20 / 0.92) 0%,
-      oklch(0.28 0.04 25 / 0.85) 50%,
-      oklch(0.35 0.06 15 / 0.80) 100%
+      160deg,
+      oklch(0.10 0.015 25 / 0.95) 0%,
+      oklch(0.18 0.04 15 / 0.80) 50%,
+      oklch(0.14 0.03 20 / 0.88) 100%
     );
   }
 
-  /* Status badge colors */
+  /* Mughal ornamental border */
+  .mughal-border {
+    border: 1px solid oklch(0.72 0.165 68 / 0.25);
+    box-shadow: inset 0 0 0 3px oklch(0.72 0.165 68 / 0.06);
+  }
+
+  /* Mughal background texture — subtle radial glow pools */
+  .bg-mughal-pattern {
+    background-image:
+      radial-gradient(circle at 20% 50%, oklch(0.35 0.16 12 / 0.15) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, oklch(0.72 0.165 68 / 0.08) 0%, transparent 40%);
+  }
+
+  /* Status badge colors — dark backgrounds for dark theme */
   .status-pending {
-    @apply bg-yellow-100 text-yellow-800 border-yellow-200;
+    @apply bg-yellow-900/40 text-yellow-300 border-yellow-700/50;
   }
   .status-confirmed {
-    @apply bg-green-100 text-green-800 border-green-200;
+    @apply bg-green-900/40 text-green-300 border-green-700/50;
   }
   .status-cancelled {
-    @apply bg-red-100 text-red-800 border-red-200;
+    @apply bg-red-900/40 text-red-300 border-red-700/50;
   }
   .status-completed {
-    @apply bg-blue-100 text-blue-800 border-blue-200;
+    @apply bg-blue-900/40 text-blue-300 border-blue-700/50;
   }
 
   /* Card hover lift */
   .card-hover {
-    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-xl;
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover;
   }
 
   /* Decorative gold line */
@@ -189,21 +204,24 @@
     left: 0;
     width: 60px;
     height: 3px;
-    background: linear-gradient(90deg, oklch(0.75 0.14 65), oklch(0.88 0.1 75));
+    background: linear-gradient(90deg, oklch(0.72 0.165 68), oklch(0.84 0.13 72));
     border-radius: 2px;
   }
 
-  /* Custom scrollbar */
+  /* Custom scrollbar — dark charcoal track, gold thumb */
   ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: oklch(0.94 0.015 70);
+    background: oklch(0.12 0.018 25);
   }
   ::-webkit-scrollbar-thumb {
-    background: oklch(0.65 0.08 30);
+    background: oklch(0.52 0.14 60);
     border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: oklch(0.72 0.165 68);
   }
 
   /* Focus ring override */
