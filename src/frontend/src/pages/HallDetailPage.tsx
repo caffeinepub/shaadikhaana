@@ -8,6 +8,7 @@ import {
   CheckCircle2,
   ChevronLeft,
   ChevronRight,
+  ExternalLink,
   Mail,
   MapPin,
   Phone,
@@ -48,6 +49,16 @@ function getHallImages(hall: Hall): string[] {
   ];
 }
 
+function getMapsEmbedUrl(url: string): string | null {
+  try {
+    if (url.includes("maps/embed")) return url;
+    const encoded = encodeURIComponent(url);
+    return `https://maps.google.com/maps?q=${encoded}&output=embed`;
+  } catch {
+    return null;
+  }
+}
+
 export default function HallDetailPage() {
   const params = useParams({ strict: false }) as { id?: string };
   const hallId = params.id || "";
@@ -60,6 +71,9 @@ export default function HallDetailPage() {
 
   const { data: reviews = [] } = useGetHallReviews(hallId);
   const [currentImageIdx, setCurrentImageIdx] = useState(0);
+
+  const mapsUrl = hall ? localStorage.getItem(`gmap_${hall.id}`) || null : null;
+  const embedUrl = mapsUrl ? getMapsEmbedUrl(mapsUrl) : null;
 
   if (isLoading) {
     return (
@@ -216,13 +230,64 @@ export default function HallDetailPage() {
                   </div>
                 )}
               </div>
-              <div className="flex items-center gap-1.5 text-muted-foreground">
-                <MapPin className="w-4 h-4" />
-                <p className="text-sm">
-                  {hall.address}, {hall.city}
-                </p>
+              <div className="flex items-center gap-3 flex-wrap">
+                <div className="flex items-center gap-1.5 text-muted-foreground">
+                  <MapPin className="w-4 h-4" />
+                  <p className="text-sm">
+                    {hall.address}, {hall.city}
+                  </p>
+                </div>
+                {mapsUrl && (
+                  <a
+                    href={mapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1 rounded-full bg-emerald-900/30 text-emerald-400 border border-emerald-700/40 hover:bg-emerald-800/40 transition-colors"
+                    data-ocid="hall.maps.primary_button"
+                  >
+                    <MapPin className="w-3.5 h-3.5" />
+                    View on Google Maps
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                )}
               </div>
             </div>
+
+            {/* Google Maps Embed */}
+            {embedUrl && (
+              <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+                className="rounded-xl overflow-hidden border border-border shadow-sm"
+              >
+                <div className="flex items-center gap-2 px-4 py-2.5 bg-card border-b border-border">
+                  <MapPin className="w-4 h-4 text-emerald-400" />
+                  <span className="text-sm font-medium text-foreground">
+                    Location on Map
+                  </span>
+                  <a
+                    href={mapsUrl!}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="ml-auto text-xs text-emerald-400 hover:text-emerald-300 flex items-center gap-1 transition-colors"
+                  >
+                    Open in Maps <ExternalLink className="w-3 h-3" />
+                  </a>
+                </div>
+                <iframe
+                  src={embedUrl}
+                  width="100%"
+                  height="300"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title={`Map location of ${hall.name}`}
+                  className="block"
+                />
+              </motion.div>
+            )}
 
             {/* Quick Stats */}
             <div className="grid grid-cols-3 gap-4">
@@ -419,6 +484,17 @@ export default function HallDetailPage() {
                     {hall.contactEmail}
                   </a>
                 </div>
+                {mapsUrl && (
+                  <a
+                    href={mapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-sm text-emerald-400 hover:text-emerald-300 transition-colors"
+                  >
+                    <MapPin className="w-4 h-4 shrink-0" />📍 View Location on
+                    Maps
+                  </a>
+                )}
               </div>
 
               {hall.pricePerDay === BigInt(0) ? (

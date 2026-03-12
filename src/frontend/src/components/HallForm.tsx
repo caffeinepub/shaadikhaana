@@ -15,6 +15,7 @@ import {
   Building2,
   ChevronLeft,
   DollarSign,
+  ExternalLink,
   FileText,
   Loader2,
   Mail,
@@ -26,7 +27,7 @@ import {
   X,
 } from "lucide-react";
 import { motion } from "motion/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 import { Facility } from "../backend.d";
 import type { Hall } from "../backend.d";
@@ -39,6 +40,20 @@ interface HallFormProps {
   onClose: () => void;
 }
 
+function isValidMapsUrl(url: string): boolean {
+  if (!url.trim()) return false;
+  try {
+    const u = new URL(url);
+    return (
+      u.hostname.includes("google.com") ||
+      u.hostname.includes("goo.gl") ||
+      u.hostname.includes("maps.app.goo.gl")
+    );
+  } catch {
+    return false;
+  }
+}
+
 export default function HallForm({ hall, onClose }: HallFormProps) {
   const { identity } = useInternetIdentity();
   const createHall = useCreateHall();
@@ -49,6 +64,9 @@ export default function HallForm({ hall, onClose }: HallFormProps) {
   const [description, setDescription] = useState(hall?.description || "");
   const [city, setCity] = useState(hall?.city || "");
   const [address, setAddress] = useState(hall?.address || "");
+  const [googleMapsUrl, setGoogleMapsUrl] = useState(
+    () => localStorage.getItem(`gmap_${hall?.id || ""}`) || "",
+  );
   const [capacity, setCapacity] = useState(
     hall ? Number(hall.capacity).toString() : "",
   );
@@ -113,6 +131,14 @@ export default function HallForm({ hall, onClose }: HallFormProps) {
         await createHall.mutateAsync(hallData);
         toast.success("Hall created successfully!");
       }
+
+      // Persist Google Maps URL to localStorage
+      if (googleMapsUrl.trim()) {
+        localStorage.setItem(`gmap_${hallData.id}`, googleMapsUrl.trim());
+      } else {
+        localStorage.removeItem(`gmap_${hallData.id}`);
+      }
+
       onClose();
     } catch (err) {
       console.error(err);
@@ -221,6 +247,43 @@ export default function HallForm({ hall, onClose }: HallFormProps) {
                   onChange={(e) => setAddress(e.target.value)}
                 />
               </div>
+            </div>
+
+            {/* Google Maps URL */}
+            <div>
+              <Label className="mb-1.5 block">
+                Google Maps Link (Optional)
+              </Label>
+              <div className="flex gap-2">
+                <div className="relative flex-1">
+                  <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                  <Input
+                    type="url"
+                    placeholder="https://maps.google.com/... or https://goo.gl/maps/..."
+                    value={googleMapsUrl}
+                    onChange={(e) => setGoogleMapsUrl(e.target.value)}
+                    className="pl-9"
+                    data-ocid="hall_form.maps.input"
+                  />
+                </div>
+                {isValidMapsUrl(googleMapsUrl) && (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className="shrink-0 gap-1.5 border-primary/40 text-primary hover:bg-primary/10"
+                    onClick={() => window.open(googleMapsUrl, "_blank")}
+                    data-ocid="hall_form.maps.secondary_button"
+                  >
+                    <ExternalLink className="w-3.5 h-3.5" />
+                    Preview
+                  </Button>
+                )}
+              </div>
+              <p className="text-xs text-muted-foreground mt-1.5">
+                Paste your hall's Google Maps link so customers can find you
+                easily
+              </p>
             </div>
           </div>
 
